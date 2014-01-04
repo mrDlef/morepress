@@ -62,6 +62,8 @@ class Post_Type
 		$default_args['labels']['not_found'] or $default_args['labels']['not_found'] = __('No '.strtolower($default_args['labels']['name']).' found', 'text_domain');
 		$default_args['labels']['not_found_in_trash'] or $default_args['labels']['not_found_in_trash'] = __('No '.strtolower($default_args['labels']['name']).' found in Trash', 'text_domain');
 		
+		$default_args['rewrite']['slug'] = $this->_post_type;
+		
 		$args['has_archive'] and $default_args['show_in_nav_menus'] = true;
 		
 		return array_merge($args, $default_args);

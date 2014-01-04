@@ -26,7 +26,7 @@ class Post_Type
 		return post_type_exists($post_type);
 	}
 
-	public static function find($args, $output, $operator)
+	public static function find($args = array(), $output = 'names', $operator = 'and')
 	{
 		return get_post_types($args, $output, $operator);
 	}
@@ -46,7 +46,7 @@ class Post_Type
 	protected function _setDefaultArgs($args)
 	{
 		$default_args = array();
-
+		
 		$default_args['labels']['name'] = _x(ucfirst($this->_post_type).'s', 'Post Type General Name', 'text_domain');
 		$default_args['labels']['singular_name'] = _x(ucfirst($this->_post_type), 'Post Type Singular Name', 'text_domain');
 
@@ -61,7 +61,9 @@ class Post_Type
 		$default_args['labels']['search_items'] or $default_args['labels']['search_items'] = __('Search '.$default_args['labels']['name'], 'text_domain');
 		$default_args['labels']['not_found'] or $default_args['labels']['not_found'] = __('No '.strtolower($default_args['labels']['name']).' found', 'text_domain');
 		$default_args['labels']['not_found_in_trash'] or $default_args['labels']['not_found_in_trash'] = __('No '.strtolower($default_args['labels']['name']).' found in Trash', 'text_domain');
-
+		
+		$args['has_archive'] and $default_args['show_in_nav_menus'] = true;
+		
 		return array_merge($args, $default_args);
 	}
 

@@ -26,24 +26,30 @@ class Post_Type_Archive extends Meta_Box
 			$post_type->object_id = $post_type->name;
 			$post_type->title = $post_type->labels->name.' '.__('Archive', 'default');
 			$post_type->object = 'cpt-archive';
+
+			$post_type->menu_item_parent = null;
+			$post_type->url = null;
+			$post_type->xfn = null;
+			$post_type->db_id = null;
+			$post_type->target = null;
+			$post_type->attr_title = null;
 		}
 
 		$walker = new \Walker_Nav_Menu_Checklist(array());
 		?>
-		<div id="morepress-meta-box-nav-menu-post-type-archive" class="morepress-meta-box-nav-menu-post-type-archive">
-			<div id="morepress-meta-box-nav-menu-post-type-archive-tabs-panel" class="tabs-panel tabs-panel-active">
-				<ul id="morepress-meta-box-nav-menu-post-type-archive-checklist" class="categorychecklist form-no-clear">
-					<?php echo walk_nav_menu_tree(array_map('wp_setup_nav_menu_item', $post_types), 0, (object) array('walker' => $walker)); ?>
-				</ul>
-			</div>
-			<p class="button-controls">
-				<span class="add-to-menu">
-					<input type="submit"<?php wp_nav_menu_disabled_check( $nav_menu_selected_id ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e('Add to Menu'); ?>" name="add-ctp-archive-menu-item" id="submit-cpt-archive" />
-					<span class="spinner"></span>
-				</span>
-			</p>
-
+		<div id="cpt-archive" class="posttypediv">
+			 <div id="tabs-panel-cpt-archive" class="tabs-panel tabs-panel-active">
+				  <ul id="ctp-archive-checklist" class="categorychecklist form-no-clear">
+						<?php echo walk_nav_menu_tree(array_map('wp_setup_nav_menu_item', $post_types), 0, (object) array('walker' => $walker)); ?>
+				  </ul>
+			 </div>
 		</div>
+		<p class="button-controls">
+			 <span class="add-to-menu">
+				  <input type="submit"<?php wp_nav_menu_disabled_check($nav_menu_selected_id); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e('Add to Menu'); ?>" name="add-ctp-archive-menu-item" id="submit-cpt-archive" />
+				  <span class="spinner"></span>
+			 </span>
+		</p>
 		<?php
 	}
 

@@ -37,10 +37,10 @@ function morepress_register_js($hook) {
 
 add_action( 'admin_enqueue_scripts', 'morepress_register_js' );
 
-function morepress_get_term_image($term, $size = 'thumbnail', $icon = false) {
+function morepress_get_term_image($term, $slug, $size = 'thumbnail', $icon = false) {
 	$presenter_custom_fields = get_option( 'taxonomy_term_'.$term->term_id );
-	if(!empty($presenter_custom_fields['image'])) {
-		return wp_get_attachment_image_src($presenter_custom_fields['image'], $size, $icon);
+	if(!empty($presenter_custom_fields[$slug])) {
+		return wp_get_attachment_image_src($presenter_custom_fields[$slug], $size, $icon);
 	}
 	return false;
 }

@@ -104,41 +104,20 @@ class Taxonomy
 	{
 		register_taxonomy($this->_taxonomy, $this->_object_type, $this->_args);
 	}
-	
-	public function addField($callback)
+
+	public function addField($type, $slug, $params = array())
+	{
+		$class_name = '\\Morepress\\Taxonomy\\Field\\'.ucfirst($type);
+		if(class_exists($class_name))
+		{
+			return new $class_name($this, $slug, $params);
+		}
+	}
+
+	public function onEdit($callback)
 	{
 		$this->registerOnSave();
 		add_action( $this->_taxonomy.'_edit_form_fields', $callback, 10, 2 );
-	}
-
-	public function addThumbnail()
-	{
-		$this->addField(function($term = null) {
-			if (is_object($term)) {
-				$term_id = $term->term_id;
-				$term_meta = get_option('taxonomy_term_' . $term_id);
-				$image = null;
-				if ($term_meta) {
-					$image = wp_get_attachment_image_src($term_meta['image'], 'medium');
-					$image = $image[0];
-				}
-				?>
-				<tr class="form-field">
-					<th scope="row" valign="top">
-						<label for="term_meta[image]">Image</label>
-					</th>
-					<td>
-						<input name="term_meta[image]" type="hidden" class="custom_upload_image" value="<?php echo esc_attr($term_meta['image']) ? esc_attr($term_meta['image']) : ''; ?>">
-						<img src="<?php echo $image; ?>" class="custom_preview_image" alt="">
-						<p>
-							<input class="custom_upload_image_button button" type="button" value="Choisir une image">
-							<a href="#" class="custom_clear_image_button button">Supprimer l'image</a>
-						</p>
-					</td>
-				</tr>
-				<?php
-			}
-		});
 	}
 	
 	public function registerOnSave()

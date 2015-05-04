@@ -25,7 +25,13 @@ add_filter('wp_get_nav_menu_items', array($meta_box_nav_menu_post_type_archive, 
 });
 
 function morepress_register_js($hook) {
-	if ('post-new.php' != $hook and 'post.php' != $hook and 'edit-tags.php' != $hook)
+	$allowed_hooks = array(
+		'post-new.php',
+		'post.php',
+		'edit-tags.php',
+		'profile.php',
+	);
+	if (! in_array($hook, $allowed_hooks))
 	{
 		return;
 	}

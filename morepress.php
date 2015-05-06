@@ -30,6 +30,7 @@ function morepress_register_js($hook) {
 		'post.php',
 		'edit-tags.php',
 		'profile.php',
+		'user-edit.php',
 	);
 	if (! in_array($hook, $allowed_hooks))
 	{
@@ -47,6 +48,13 @@ function morepress_get_term_image($term, $slug, $size = 'thumbnail', $icon = fal
 	$presenter_custom_fields = get_option( 'taxonomy_term_'.$term->term_id );
 	if(!empty($presenter_custom_fields[$slug])) {
 		return wp_get_attachment_image_src($presenter_custom_fields[$slug], $size, $icon);
+	}
+	return false;
+}
+
+function morepress_get_user_meta_image($user, $slug, $size = 'thumbnail', $icon = false) {
+	if($attachment_id = get_user_meta($user->ID, $slug, true)) {
+		return wp_get_attachment_image_src($attachment_id, $size, $icon);
 	}
 	return false;
 }

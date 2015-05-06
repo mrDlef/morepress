@@ -2,7 +2,7 @@
 
 namespace Morepress\User\Field;
 
-class Text extends \Morepress\User\Field
+class Number extends \Morepress\User\Field
 {
 
 	public function render($user) {
@@ -10,7 +10,7 @@ class Text extends \Morepress\User\Field
 		echo '<th><label for="' . $this->_id . '">' . $this->_params['label'] . '</label></th>';
 		echo '
 			<td>
-				<input type="text" name="' . $this->_name . '" id="' . $this->_id . '" value="'.$this->_value($user).'" class="regular-text" '.$this->_inputAttr().'>
+				<input type="number" name="' . $this->_name . '" id="' . $this->_id . '" value="'.$this->_value($user).'" class="regular-text" '.$this->_inputAttr().'>
 				' . $this->_description() . '
 			</td>
 		';

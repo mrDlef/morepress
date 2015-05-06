@@ -16,7 +16,7 @@ class Image extends \Morepress\Taxonomy\Field
 			$term_meta = get_option('taxonomy_term_' . $term_id);
 			$image = null;
 			if ($term_meta) {
-				$image = wp_get_attachment_image_src($term_meta[$this->_slug], 'medium');
+				$image = wp_get_attachment_image_src($term_meta[$this->_slug], 'original');
 				$image = $image[0];
 			}
 			?>
@@ -26,7 +26,7 @@ class Image extends \Morepress\Taxonomy\Field
 				</th>
 				<td>
 					<input name="term_meta[<?php echo $this->_slug; ?>]" type="hidden" class="custom_upload_image" value="<?php echo esc_attr($term_meta[$this->_slug]) ? esc_attr($term_meta[$this->_slug]) : ''; ?>">
-					<img src="<?php echo $image; ?>" class="custom_preview_image" alt="">
+					<img src="<?php echo $image; ?>" class="custom_preview_image" height="150" alt="">
 					<p>
 						<input class="custom_upload_image_button button" type="button" value="Choisir une image">
 						<a href="#" class="custom_clear_image_button button">Supprimer l'image</a>

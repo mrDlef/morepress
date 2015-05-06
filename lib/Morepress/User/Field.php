@@ -38,9 +38,31 @@ abstract class Field {
 		$default_params = array(
 			'label' => ucfirst($this->_slug),
 			'description' => '',
+			'input_attr' => array(),
+			'default_value' => '',
 		);
 
 		return array_merge($default_params, $params);
+	}
+
+	protected function _inputAttr()
+	{
+		$attributes = array();
+		foreach($this->_params['input_attr'] as $attr=>$value)
+		{
+			$attributes[] = $attr.'="'.$value.'"';
+		}
+		return implode(' ', $attributes);
+	}
+
+	protected function _value($user) {
+		$value = get_user_meta($user->ID, $this->_name, true);
+		empty($value) and $value = $this->_params['default_value'];
+		return $value;
+	}
+
+	protected function _description() {
+		return (empty($this->_params['description']) ? '' : '<p class="description">'.$this->_params['description'].'</p>');
 	}
 
 	/**

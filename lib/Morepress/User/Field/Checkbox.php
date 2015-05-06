@@ -15,7 +15,7 @@ class Checkbox extends \Morepress\User\Field
 			<td>
 				<label for="' . $this->_id . '">
 					<input type="hidden" name="' . $this->_name . '" value="0">
-					<input type="checkbox" name="' . $this->_name . '" id="' . $this->_id . '"' . (get_the_author_meta($this->_name, $user->ID) ? ' checked' : '') . ' value="1">
+					<input type="checkbox" name="' . $this->_name . '" id="' . $this->_id . '"' . ($this->_value($user) ? ' checked' : '') . ' value="1" '.$this->_inputAttr().'>
 					' . $this->_params['description'] . '
 				</label>
 			</td>';

@@ -104,9 +104,10 @@ class Post_Type
 
 	public function removeSupport($support)
 	{
+		is_object($support) and $support = $support->getName();
 		is_string($support) and $support = array($support);
 		$this->_remove_support = array_merge($this->_remove_support, $support);
-		add_action($this, 'wpRemoveSupport');
+		add_action('init', array($this, 'wpRemoveSupport'));
 	}
 
 	public function hasSupport($support)
@@ -141,7 +142,10 @@ class Post_Type
 
 	public function wpRemoveSupport()
 	{
-		remove_post_type_support($this->_post_type, $this->_remove_support);
+		foreach($this->_remove_support as $support)
+		{
+			remove_post_type_support($this->_post_type, $support);
+		}
 	}
 
 	public function addAction($name, $callback) {
@@ -158,6 +162,19 @@ class Post_Type
 		if (get_post_type($post) == $this->_post_type) {
 			$this->_action['callback']();
 		}
+	}
+
+	public function removeAddLink() {
+		\Morepress\Admin\Menu::removeSub('edit.php?post_type='.$this->_post_type, 'post-new.php?post_type='.$this->_post_type);
+		add_action('admin_head', function() {
+			if ($this->_post_type == get_post_type()) {
+				echo '
+					<style type="text/css">
+						.add-new-h2{display:none;}
+					</style>
+				';
+			}
+		});
 	}
 	
 }

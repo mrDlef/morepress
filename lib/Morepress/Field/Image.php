@@ -9,7 +9,7 @@ class Image extends \Morepress\Field
 	public function html($meta){
 		$image = null;
 		if ($meta) {
-			$image = wp_get_attachment_image_src($meta, 'medium');
+			$image = wp_get_attachment_image_src($meta, 'original');
 			$image = $image[0];
 		}
 		echo '<tr class="form-field">';
@@ -19,7 +19,7 @@ class Image extends \Morepress\Field
 			</th>
 			<td>
 				<input name="'.$this->_name.'" type="hidden" class="custom_upload_image" value="'.$meta.'">
-				<img src="'.$image.'" class="custom_preview_image" alt="">
+				<img src="'.$image.'" class="custom_preview_image" height="150" alt="">
 				<p>
 					<input class="custom_upload_image_button button" type="button" value="Choisir une image">
 					<a href="#" class="custom_clear_image_button button">Supprimer l\'image</a>

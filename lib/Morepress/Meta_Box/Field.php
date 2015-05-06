@@ -17,7 +17,7 @@ class Field extends \Morepress\Meta_Box
 		$class_name = 'Morepress\\Field\\' . ucfirst($type);
 		if (class_exists($class_name))
 		{
-			$this->_fields[] = new $class_name($slug, $desc, $params);
+			$this->_fields[$slug] = new $class_name($slug, $desc, $params);
 			return true;
 		}
 		return false;
@@ -133,6 +133,7 @@ class Field extends \Morepress\Meta_Box
 		} elseif (!current_user_can('edit_post', $post_id)) {
 			return $post_id;
 		}
+		$this->_beforeSave($post_id);
 		foreach ($this->_fields as $field) {
 			if (isset($_POST[$field->get_id()])) {
 				$field->save($post_id);
@@ -145,6 +146,18 @@ class Field extends \Morepress\Meta_Box
 				}
 			}
 		}
+		$this->_afterSave($post_id);
+		return $post_id;
+	}
+
+	protected function _beforeSave($post_id)
+	{
+
+	}
+
+	protected function _afterSave($post_id)
+	{
+		
 	}
 
 }

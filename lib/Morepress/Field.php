@@ -4,6 +4,7 @@ namespace Morepress;
 
 abstract class Field {
 
+	protected $_prefix_id = '';
 	/**
 	 * @var string The field slug, used as name and ID in HTML markup
 	 */
@@ -83,8 +84,18 @@ abstract class Field {
 	 * @return string
 	 */
 	public function output($meta) {
+		$this->_beforeOutput($meta);
 		$html = $this->html($meta);
 		return $html;
+	}
+
+	protected function _beforeOutput($meta)
+	{
+
+	}
+
+	public function html($meta) {
+
 	}
 
 	/**

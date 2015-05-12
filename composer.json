@@ -1,0 +1,23 @@
+{
+    "name": "daidais/morepress",
+    "description": "Stuff made easily on Wordpress",
+    "type": "wordpress-plugin",
+    "require": {
+        "php": ">=5.4",
+        "composer/installers": "~1.0",
+        "wpackagist-plugin/wp-autoloader": "2.0.9",
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Denis Favreau",
+            "email": "denis.favreau@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "Acme": "src/"
+        }
+    }
+}

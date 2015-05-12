@@ -12,7 +12,7 @@ abstract class Meta_Box
 	protected $_context;
 	protected $_priority;
 
-	public static function forge($id, $title = null, $screens = null, $context = null, $priority = null)
+	public static function forge($id, $title = null, $screens = null, $context = 'advanced', $priority = 'default')
 	{
 		if (isset(static::$_meta_boxes[$id]))
 		{

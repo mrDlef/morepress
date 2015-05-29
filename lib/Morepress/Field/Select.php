@@ -1,11 +1,12 @@
-<?php 
+<?php
 
 namespace Morepress\Field;
 
-class Text extends \Morepress\Field
+class Select extends \Morepress\Field
 {
-	
-	protected $_prefix_id = 'morepress_text_';
+
+	protected $_prefix_id = '';
+
 	public function html($meta, $repeatable = null){
 		$name = is_null($repeatable) ? $this->_name : $this->_name.'['.$repeatable.']';
 		$id = is_null($repeatable) ? $this->_id : $this->_id.'_'.$repeatable;
@@ -15,7 +16,13 @@ class Text extends \Morepress\Field
 				<label for="'.$id . '">'.$this->_label.'</label>
 			</th>
 			<td>
-				<input type="text" value="'.$meta.'" name="'.$name.'" id="'.$id . '" class="large-text">';
+				<select name="'.$name.'" id="'.$id . '" '.$this->_inputAttr().'>
+		';
+		foreach($this->_params['options'] as $key=>$value)
+		{
+			echo '<option '.(($key == $meta) ? 'selected' : '').' value="'.$key.'">'.$value.'</option>';
+		}
+		echo '</select>';
 		if(!empty($this->_description))
 		{
 			echo '<p class="description">' . $this->_description . '</p>';

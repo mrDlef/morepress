@@ -5,7 +5,7 @@ jQuery(function (jQuery) {
     {
         var $this = $(element);
         $this.autocomplete({
-            source: php_array.admin_ajax + '?action=morepress_postlist_ajax',
+            source: php_array.admin_ajax + '?action=morepress_'+$this.attr('data-callback')+'_ajax',
             select: function (event, ui) {
                 $this.val(ui.item.post_title);
                 $this.next().val(ui.item.ID);
@@ -20,7 +20,7 @@ jQuery(function (jQuery) {
         });
         $this.autocomplete("instance")._renderItem = function (ul, item) {
             return $("<li>")
-                    .append("<a>" + item.ID + ": " + item.post_title + "</a>")
+                    .append("<a>" + item.ID + ": " + item.post_title + " (" + item.post_type + ")</a>")
                     .appendTo(ul);
         };
     }
@@ -71,6 +71,7 @@ jQuery(function (jQuery) {
     // Reapeatable fieldset
     $(document).on('click', '.group-repeatable-add', function (e) {
         var $newFieldset = $($(this).attr('href')).html();
+        $newFieldset = $newFieldset.replace(/__INDEX__/g, $(this).parent().parent().find('fieldset').size());
         $(this).parent().before($newFieldset);
         $('.morepress_post_list').each(function () {
             initAutocomplete(this);

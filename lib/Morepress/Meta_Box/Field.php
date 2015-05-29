@@ -55,8 +55,15 @@ class Field extends \Morepress\Meta_Box
 						$meta = get_post_meta($post->ID, $field->get_id(), true);
 					}
 				}
-
-				echo $field->output($meta);
+				if(isset($index))
+				{
+					echo $field->output($meta, $index);
+				}
+				else
+				{
+					echo $field->output($meta);
+				}
+				
 			}
 			echo '</table>';
 		}
@@ -70,7 +77,7 @@ class Field extends \Morepress\Meta_Box
 			echo '<fieldset>';
 			echo '<p><strong>'.$fieldset->getLegend().'</strong> <a class="group-repeatable-remove button button-small right" href="#">Supprimer</a></legend>';
 			echo '<hr>';
-			$this->render($fieldset->getFields());
+			$this->render($fieldset->getFields(), null, '__INDEX__');
 			echo '<hr>';
 			echo '</fieldset>';
 			echo '</script>';
@@ -135,15 +142,11 @@ class Field extends \Morepress\Meta_Box
 		}
 		$this->_beforeSave($post_id);
 		foreach ($this->_fields as $field) {
-			if (isset($_POST[$field->get_id()])) {
-				$field->save($post_id);
-			}
+			$field->save($post_id);
 		}
 		foreach ($this->_fieldsets as $fieldset) {
 			foreach ($fieldset->getFields() as $field) {
-				if (isset($_POST[$field->get_id()])) {
-					$field->save($post_id);
-				}
+				$field->save($post_id);
 			}
 		}
 		$this->_afterSave($post_id);

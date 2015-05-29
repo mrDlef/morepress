@@ -6,11 +6,13 @@ class Editor extends \Morepress\Field {
 
 	protected $_prefix_id = 'morepress_editor_';
 
-	public function html($meta) {
+	public function html($meta, $repeatable = null) {
+		$name = is_null($repeatable) ? $this->_name : $this->_name.'['.$repeatable.']';
+		$id = is_null($repeatable) ? $this->_id : $this->_id.'_'.$repeatable;
 		echo '<tr class=form-field">';
 		echo '
 			<th>
-				<label for="' . $this->_id . '">' . $this->_label . '</label>
+				<label for="' . $id . '">' . $this->_label . '</label>
 			</th>
 			<td>
 			';

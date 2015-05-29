@@ -12,8 +12,8 @@ class PostList extends \Morepress\Field
 		add_action('wp_enqueue_scripts', function() {
 			wp_enqueue_script('suggest');
 		});
-		add_action('wp_ajax_morepress_postlist_ajax', array($this, 'ajax'));
-		add_action('wp_ajax_nopriv_morepress_postlist_ajax', array($this, 'ajax'));
+		add_action('wp_ajax_morepress_'.$this->_id.'_ajax', array($this, 'ajax'));
+		add_action('wp_ajax_nopriv_morepress_'.$this->_id.'_ajax', array($this, 'ajax'));
 	}
 
 	public function ajax()
@@ -32,17 +32,19 @@ class PostList extends \Morepress\Field
 		return get_posts($params);
 	}
 
-	public function html($meta){
+	public function html($meta, $repeatable = null){
+		$name = is_null($repeatable) ? $this->_name : $this->_name.'['.$repeatable.']';
+		$id = is_null($repeatable) ? $this->_id : $this->_id.'_'.$repeatable;
 		$items = $this->_get_posts();
 		empty($meta) or $post = get_post($meta);
 		echo '<tr class="form-field">';
 		echo '
 			<th>
-				<label for="'.$this->_id.'">'.$this->_label.'</label>
+				<label for="'.$id . '">'.$this->_label.'</label>
 			</th>
 			<td>
-				<input type="text" class="morepress_post_list" value="'.(isset($post->post_title) ? $post->post_title : '').'" id="'.$this->_id.'" placeholder="Commencez à tapper...">
-				<input type="hidden" value="'.(isset($post->ID) ? $post->ID : '').'" name="'.$this->_name.'">
+				<input data-callback="'.$this->_id.'" type="text" class="morepress_post_list" value="'.(isset($post->post_title) ? $post->post_title : '').'" id="'.$id . '" placeholder="Commencez à tapper...">
+				<input type="hidden" value="'.(isset($post->ID) ? $post->ID : '').'" name="'.$name.'">
 		';
 		if(!empty($this->_description))
 		{

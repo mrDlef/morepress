@@ -47,12 +47,7 @@ abstract class Field {
 		// Sanitize ID field
 		$slug = strtolower(str_replace(array('\'', ' ', '"'), '_', $this->_slug));
 		$this->_id = $this->_prefix_id . $slug;
-		// Change name of input in case of repeatable field
-		if (! empty($this->_params['repeatable']) or ! empty($this->_params['grouped_repeatable'])) {
-			$this->_name = $this->_id . '[]';
-		} else {
-			$this->_name = $this->_id;
-		}
+		$this->_name = $this->_id;
 	}
 
 	/**
@@ -78,14 +73,28 @@ abstract class Field {
 		return $html;
 	}
 
+	protected function _inputAttr()
+	{
+		if(! empty($this->_params['input_attr']))
+		{
+			$attributes = array();
+			foreach($this->_params['input_attr'] as $attr=>$value)
+			{
+				$attributes[] = $attr.'="'.$value.'"';
+			}
+			return implode(' ', $attributes);
+		}
+
+	}
+
 	/**
 	 * @param $meta
 	 *
 	 * @return string
 	 */
-	public function output($meta) {
+	public function output($meta, $repeatable = null) {
 		$this->_beforeOutput($meta);
-		$html = $this->html($meta);
+		$html = $this->html($meta, $repeatable);
 		return $html;
 	}
 
@@ -94,7 +103,7 @@ abstract class Field {
 
 	}
 
-	public function html($meta) {
+	public function html($meta, $repeatable = null) {
 
 	}
 
@@ -164,9 +173,10 @@ abstract class Field {
 	 */
 	public function save($post_id) {
 		$old = get_post_meta($post_id, $this->get_id(), true);
-		$new = $_POST[$this->get_id()];
+		$new = null;
+		isset($_POST[$this->get_id()]) and $new = $_POST[$this->get_id()];
 		// Special save for repeatable Fields
-		if ($this->_params['repeatable'] or $this->_params['grouped_repeatable']) {
+		if (isset($this->_params['repeatable']) or isset($this->_params['grouped_repeatable'])) {
 			delete_post_meta($post_id, $this->get_id());
 
 			// pre save allow special treatment for each field before saving

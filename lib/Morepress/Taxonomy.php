@@ -9,10 +9,10 @@ class Taxonomy
 	protected $_taxonomy;
 	protected $_object_type;
 	protected $_args;
-	protected $_add_support = array();
-	protected $_remove_support = array();
-	protected $_fields = array();
 	protected $_onsave_registered = false;
+	protected static $_to_register = array();
+	protected static $_to_unregister = array();
+	protected static $_on_init_registered = false;
 
 	public static function forge($taxonomy, $object_type = null, $args = array())
 	{
@@ -32,6 +32,51 @@ class Taxonomy
 	public static function find($args = array(), $output = 'names', $operator = 'and')
 	{
 		return get_taxonomies($args, $output, $operator);
+	}
+
+	public static function register($taxonomy, $object_type = null, $args = array())
+	{
+		static::$_to_register[$taxonomy] = array(
+			'object_type' => $object_type,
+			'args' => $args,
+		);
+		static::registerOnInit();
+	}
+
+	public static function unregister($taxonomy)
+	{
+		static::$_to_unregister[$taxonomy] = $taxonomy;
+		static::registerOnInit();
+	}
+
+	public static function registerOnInit()
+	{
+		if(! static::$_on_init_registered)
+		{
+			add_action('init', array(__CLASS__, 'onInit'));
+			static::$_on_init_registered = true;
+		}
+	}
+
+	public static function onInit() {
+		if(!empty(static::$_to_unregister))
+		{
+			foreach (static::$_to_unregister as $taxonomy)
+			{
+				global $wp_taxonomies;
+				if (static::exists($taxonomy))
+				{
+					unset($wp_taxonomies[$taxonomy]);
+				}
+			}
+		}
+		if(!empty(static::$_to_register))
+		{
+			foreach(static::$_to_register as $taxonomy=>$option)
+			{
+				register_taxonomy($taxonomy, $option['object_type'], $option['args']);
+			}
+		}
 	}
 
 	protected function __construct($taxonomy, $object_type = null, $args = array())

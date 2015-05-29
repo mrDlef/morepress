@@ -8,8 +8,19 @@ class Post {
 
 	public function __construct($post)
 	{
-		is_int($post) and $post = get_post($post);
+		is_numeric($post) and $post = get_post($post);
 		$this->_post = $post;
+	}
+
+	public function exists()
+	{
+		return (! empty($this->_post));
+	}
+
+	public function update($postarr = array(), $wp_error = false)
+	{
+		$postarr['ID'] = $this->ID;
+		wp_update_post($postarr, $wp_error);
 	}
 
 	public function addMeta($meta_key, $meta_value, $unique = false)

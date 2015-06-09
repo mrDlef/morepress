@@ -4,7 +4,7 @@ namespace Morepress\Field;
 
 class Editor extends \Morepress\Field {
 
-	protected $_prefix_id = 'morepress_editor_';
+	protected $_prefix_id = '';
 
 	public function html($meta, $repeatable = null) {
 		$name = is_null($repeatable) ? $this->_name : $this->_name.'['.$repeatable.']';

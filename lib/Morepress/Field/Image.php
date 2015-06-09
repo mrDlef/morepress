@@ -5,7 +5,7 @@ namespace Morepress\Field;
 class Image extends \Morepress\Field
 {
 	
-	protected $_prefix_id = 'morepress_image_';
+	protected $_prefix_id = '';
 	public function html($meta, $repeatable = null){
 		$name = is_null($repeatable) ? $this->_name : $this->_name.'['.$repeatable.']';
 		$id = is_null($repeatable) ? $this->_id : $this->_id.'_'.$repeatable;

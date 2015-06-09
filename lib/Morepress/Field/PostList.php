@@ -5,7 +5,7 @@ namespace Morepress\Field;
 class PostList extends \Morepress\Field
 {
 	
-	protected $_prefix_id = 'morepress_post_list_';
+	protected $_prefix_id = '';
 
 	public function __construct($slug, $desc = null, $params = array()) {
 		parent::__construct($slug, $desc, $params);

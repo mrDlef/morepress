@@ -16,7 +16,7 @@ class Text extends \Morepress\Field
         }
         $classes = implode(' ', $classes);
         empty($classes) or $classes = ' class="'.$classes.'"';
-		echo '<tr class=form-field">';
+		echo '<tr class="form-field">';
 		echo '
 			<th>
 				<label for="'.$id . '">'.$this->_label.'</label>

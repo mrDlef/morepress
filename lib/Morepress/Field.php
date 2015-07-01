@@ -178,7 +178,7 @@ abstract class Field {
 		// Special save for repeatable Fields
 		if (isset($this->_params['repeatable']) or isset($this->_params['grouped_repeatable'])) {
 			delete_post_meta($post_id, $this->get_id());
-            if ($new) {
+            if ($new !== null) {
                 // pre save allow special treatment for each field before saving
                 $new = $this->pre_save($post_id, $new, $old);
                 foreach ($new as $n) {
@@ -186,11 +186,11 @@ abstract class Field {
                 }
 			}
 		} else { // Classic fields
-			if ($new && $new != $old) {
+			if ($new !== null && $new != $old) {
 				// pre save allow special treatment for each field before saving
 				$new = $this->pre_save($post_id, $new, $old);
 				update_post_meta($post_id, $this->get_id(), $new);
-			} elseif ('' == $new && $old) {
+			} elseif (empty($new) && $old) {
 				$this->pre_delete($post_id, $old);
 				delete_post_meta($post_id, $this->get_id(), $old);
 			}

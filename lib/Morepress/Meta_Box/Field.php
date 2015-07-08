@@ -86,8 +86,14 @@ class Field extends \Morepress\Meta_Box
 			{
 				$i = 0;
 				$fields = $fieldset->getFields();
-				$first_field = $fields[key($fields)];
-				$meta = get_post_meta($post->ID, $first_field->get_id());
+
+				foreach($fields as $field) {
+					$meta = get_post_meta($post->ID, $field->get_id());
+					if(! empty($meta)) {
+						break;
+					}
+				}
+
 				foreach($meta as $key=>$row)
 				{
 					echo '<fieldset>';

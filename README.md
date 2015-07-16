@@ -2,7 +2,13 @@
 
 Stuff made easily on Wordpress.
 
-## Post
+## Installation
+
+```shell
+composer require daidais/morepress
+```
+
+## Post Features
 
 ### Create from wordpress post ID
 

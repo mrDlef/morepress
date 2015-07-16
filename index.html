@@ -20,63 +20,61 @@
 
     <section class="main-content">
       <h2>
-<a id="post" class="anchor" href="#post" aria-hidden="true"><span class="octicon octicon-link"></span></a>Post</h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<div class="highlight highlight-shell"><pre>composer require daidais/morepress</pre></div>
+
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
 
 <h3>
-<a id="create-from-wordpress-post-id" class="anchor" href="#create-from-wordpress-post-id" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create from wordpress post ID</h3>
+<a id="post" class="anchor" href="#post" aria-hidden="true"><span class="octicon octicon-link"></span></a>Post</h3>
+
+<p>Create from id:</p>
 
 <div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$mp_post</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">\Morepress\</span><span class="pl-c1">Post</span>(<span class="pl-c1">23</span>);</span></pre></div>
 
-<h3>
-<a id="create-from-wordpress-post-object" class="anchor" href="#create-from-wordpress-post-object" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create from wordpress post object</h3>
+<p>Create from \WP_Post:</p>
 
 <div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">global</span> <span class="pl-smi">$post</span>;</span>
 <span class="pl-s1"><span class="pl-smi">$mp_post</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">\Morepress\</span><span class="pl-c1">Post</span>(<span class="pl-smi">$post</span>);</span></pre></div>
 
-<h3>
-<a id="check-if-post-exists" class="anchor" href="#check-if-post-exists" aria-hidden="true"><span class="octicon octicon-link"></span></a>Check if post exists</h3>
+<p>Check if exists:</p>
 
 <div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">if</span>(<span class="pl-smi">$mp_post</span><span class="pl-k">-&gt;</span>exists())</span>
 <span class="pl-s1">{</span>
 <span class="pl-s1">    <span class="pl-c">// Do stuff</span></span>
 <span class="pl-s1">}</span></pre></div>
 
-<h3>
-<a id="get-post-attribute" class="anchor" href="#get-post-attribute" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get post attribute</h3>
+<p>Get attribute:</p>
 
 <div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$mp_post</span><span class="pl-k">-&gt;</span><span class="pl-smi">ID</span>;</span>
 <span class="pl-s1"><span class="pl-smi">$mp_post</span><span class="pl-k">-&gt;</span><span class="pl-smi">post_name</span>;</span>
 <span class="pl-s1"><span class="pl-c">// etc.</span></span></pre></div>
 
-<h3>
-<a id="update-post" class="anchor" href="#update-post" aria-hidden="true"><span class="octicon octicon-link"></span></a>Update post</h3>
+<p>Update post:</p>
 
 <div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$mp_post</span><span class="pl-k">-&gt;</span>update(<span class="pl-c1">array</span>(</span>
 <span class="pl-s1">    <span class="pl-s"><span class="pl-pds">'</span>post_status<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>publish<span class="pl-pds">'</span></span>,</span>
 <span class="pl-s1">));</span></pre></div>
 
-<h3>
-<a id="add-post-meta" class="anchor" href="#add-post-meta" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add post meta</h3>
+<p>Add meta:</p>
 
 <div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$mp_post</span><span class="pl-k">-&gt;</span>addMeta(<span class="pl-s"><span class="pl-pds">'</span>meta_key<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>meta_value<span class="pl-pds">'</span></span>, <span class="pl-c1">true</span>);</span></pre></div>
 
-<h3>
-<a id="update-post-meta" class="anchor" href="#update-post-meta" aria-hidden="true"><span class="octicon octicon-link"></span></a>Update post meta</h3>
+<p>Update meta:</p>
 
 <div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$mp_post</span><span class="pl-k">-&gt;</span>updateMeta(<span class="pl-s"><span class="pl-pds">'</span>meta_key<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>meta_value<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>prev_meta_value<span class="pl-pds">'</span></span>)</span></pre></div>
 
-<h3>
-<a id="get-post-meta" class="anchor" href="#get-post-meta" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get post meta</h3>
+<p>Get meta:</p>
 
 <div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$mp_post</span><span class="pl-k">-&gt;</span>getMeta(<span class="pl-s"><span class="pl-pds">'</span>meta_key<span class="pl-pds">'</span></span>, <span class="pl-c1">true</span>);</span></pre></div>
 
-<h3>
-<a id="delete-post-meta" class="anchor" href="#delete-post-meta" aria-hidden="true"><span class="octicon octicon-link"></span></a>Delete post meta</h3>
+<p>Delete meta:</p>
 
 <div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$mp_post</span><span class="pl-k">-&gt;</span>deleteMeta(<span class="pl-s"><span class="pl-pds">'</span>meta_key<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>meta_value<span class="pl-pds">'</span></span>);</span></pre></div>
 
-<h3>
-<a id="get-post-time" class="anchor" href="#get-post-time" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get post time</h3>
+<p>Get time:</p>
 
 <div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$mp_post</span><span class="pl-k">-&gt;</span>getTime();</span></pre></div>
 

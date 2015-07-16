@@ -1,16 +1,16 @@
 {
-	"name": "fdaidais/morepress",
-	"description" : "Stuff made easily on Wordpress",
-	"type": "wordpress-plugin",
-	"homepage": "http://daidais.github.io/morepress",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Denis Favreau",
-			"email": "denis.favreau@gmail.com"
-		}
-	],
-	"require": {
-		"composer/installers": "~1.0"
-	}
+    "name": "daidais/morepress",
+    "description": "Stuff made easily on Wordpress",
+    "type": "wordpress-plugin",
+    "homepage": "http://daidais.github.io/morepress",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Denis Favreau",
+            "email": "denis.favreau@gmail.com"
+        }
+    ],
+    "require": {
+        "composer/installers": "~1.0"
+    }
 }

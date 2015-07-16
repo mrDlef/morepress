@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: Morepress
-  Version: 0.1.0
+  Version: 0.3.0
   Plugin URI: https://github.com/daidais/morepress
   Description: Framework to do lots of things programmatically with pleasure
   Author: Denis Favreau
@@ -12,11 +12,11 @@
 add_action('plugins_loaded', function() {
 	/* inject cpt archives meta box */
 	global $meta_box_nav_menu_post_type_archive;
-	$meta_box_nav_menu_post_type_archive = \Morepress\Meta_Box\Nav_Menu\Post_Type_Archive::forge('post-type-archive', __('Post type archives'), 'nav-menus', 'side');
+	$meta_box_nav_menu_post_type_archive = \Morepress\Meta_Box\Nav_Menu\Post_Type_Archive::forge('post-type-archive', __('Archives'), 'nav-menus', 'side');
 
 	add_action('admin_head-nav-menus.php', function() {
 		global $meta_box_nav_menu_post_type_archive;
-		add_meta_box('post-type-archive', __('Post type archives'), array($meta_box_nav_menu_post_type_archive, 'callback'), 'nav-menus', 'side', 'default');
+		add_meta_box('post-type-archive', __('Archives'), array($meta_box_nav_menu_post_type_archive, 'callback'), 'nav-menus', 'side', 'default');
 	});
 
 	/* take care of the urls */

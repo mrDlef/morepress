@@ -2,22 +2,29 @@
 
 Stuff made easily on Wordpress.
 
-## Post
+## Installation
 
-### Create from wordpress post ID
+```shell
+composer require daidais/morepress
+```
+## Features
+
+### Post
+
+Create from id:
 
 ```php
 $mp_post = new \Morepress\Post(23);
 ```
 
-### Create from wordpress post object
+Create from \WP_Post:
 
 ```php
 global $post;
 $mp_post = new \Morepress\Post($post);
 ```
 
-### Check if post exists
+Check if exists:
 
 ```php
 if($mp_post->exists())
@@ -26,7 +33,7 @@ if($mp_post->exists())
 }
 ```
 
-### Get post attribute
+Get attribute:
 
 ```php
 $mp_post->ID;
@@ -34,7 +41,7 @@ $mp_post->post_name;
 // etc.
 ```
 
-### Update post
+Update post:
 
 ```php
 $mp_post->update(array(
@@ -42,31 +49,31 @@ $mp_post->update(array(
 ));
 ```
 
-### Add post meta
+Add meta:
 
 ```php
 $mp_post->addMeta('meta_key', 'meta_value', true);
 ```
 
-### Update post meta
+Update meta:
 
 ```php
 $mp_post->updateMeta('meta_key', 'meta_value', 'prev_meta_value')
 ```
 
-### Get post meta
+Get meta:
 
 ```php
 $mp_post->getMeta('meta_key', true);
 ```
 
-## Delete post meta
+Delete meta:
 
 ```php
 $mp_post->deleteMeta('meta_key', 'meta_value');
 ```
 
-### Get post time
+Get time:
 
 ```php
 $mp_post->getTime();

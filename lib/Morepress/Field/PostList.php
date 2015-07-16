@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 namespace Morepress\Field;
 
 class PostList extends \Morepress\Field
 {
-	
+
 	protected $_prefix_id = '';
 
 	public function __construct($slug, $desc = null, $params = array()) {
@@ -33,6 +33,7 @@ class PostList extends \Morepress\Field
 	}
 
 	public function html($meta, $repeatable = null){
+		is_array($meta) and $meta = null;
 		$name = is_null($repeatable) ? $this->_name : $this->_name.'['.$repeatable.']';
 		$id = is_null($repeatable) ? $this->_id : $this->_id.'_'.$repeatable;
 		$items = $this->_get_posts();
@@ -50,7 +51,7 @@ class PostList extends \Morepress\Field
 		{
 			echo '<p class="description">' . $this->_description . '</p>';
 		}
-		echo '</td>'; 
+		echo '</td>';
 		echo '</tr>';
 	}
 

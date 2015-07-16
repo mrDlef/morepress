@@ -39,7 +39,7 @@ class Fieldset {
 	public function getFields() {
 		return $this->_fields;
 	}
-	
+
 	public function getName() {
 		return $this->_name;
 	}

@@ -5,16 +5,17 @@ namespace Morepress\Meta_Box;
 class Field extends \Morepress\Meta_Box
 {
 	protected $_fields = array();
-	
+
 	protected $_fieldsets = array();
-	
+
 	public function __construct($id, $title, $screens = null, $context = 'advanced', $priority = 'default') {
 		parent::__construct($id, $title, $screens, $context, $priority);
 		add_action('save_post', array($this, 'saveData'));
 	}
-	
+
 	public function addField($type, $slug, $desc = null, $params = null) {
 		$class_name = 'Morepress\\Field\\' . ucfirst($type);
+        $params['context'] = $this->_context;
 		if (class_exists($class_name))
 		{
 			$this->_fields[$slug] = new $class_name($slug, $desc, $params);
@@ -22,12 +23,12 @@ class Field extends \Morepress\Meta_Box
 		}
 		return false;
 	}
-	
+
 	public function addFieldset($name, $legend, $repeatable = false) {
 		$this->_fieldsets[$name] = new \Morepress\Fieldset($name, $legend, $repeatable);
 		return $this->_fieldsets[$name];
 	}
-	
+
 	public function render($fields, $post = null, $index = null)
 	{
 		if (!empty($fields)) {
@@ -63,12 +64,12 @@ class Field extends \Morepress\Meta_Box
 				{
 					echo $field->output($meta);
 				}
-				
+
 			}
 			echo '</table>';
 		}
 	}
-	
+
 	public function renderFieldset($fieldset, $post)
 	{
 		if($fieldset->isRepeatable())
@@ -85,8 +86,14 @@ class Field extends \Morepress\Meta_Box
 			{
 				$i = 0;
 				$fields = $fieldset->getFields();
-				$first_field = $fields[key($fields)];
-				$meta = get_post_meta($post->ID, $first_field->get_id());
+
+				foreach($fields as $field) {
+					$meta = get_post_meta($post->ID, $field->get_id());
+					if(! empty($meta)) {
+						break;
+					}
+				}
+
 				foreach($meta as $key=>$row)
 				{
 					echo '<fieldset>';
@@ -110,7 +117,7 @@ class Field extends \Morepress\Meta_Box
 			echo '</fieldset>';
 		}
 	}
-	
+
 	public function callback($post) {
 		echo '<input type="hidden" name="custom_meta_box_nonce" value="' . wp_create_nonce(basename(__FILE__)) . '" />';
 		$this->render($this->_fields, $post);
@@ -122,7 +129,7 @@ class Field extends \Morepress\Meta_Box
 			echo '</fieldset>';
 		}
 	}
-	
+
 	public function saveData($post_id) {
 		if (!isset($_POST['custom_meta_box_nonce'])) {
 			return $post_id;
@@ -160,7 +167,7 @@ class Field extends \Morepress\Meta_Box
 
 	protected function _afterSave($post_id)
 	{
-		
+
 	}
 
 }

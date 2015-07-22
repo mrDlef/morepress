@@ -12,6 +12,7 @@ class Taxonomy
 	protected $_onsave_registered = false;
 	protected static $_to_register = array();
 	protected static $_to_unregister = array();
+	protected static $_to_register_to_post_type = array();
 	protected static $_on_init_registered = false;
 
 	public static function forge($taxonomy, $object_type = null, $args = array())
@@ -77,6 +78,16 @@ class Taxonomy
 				register_taxonomy($taxonomy, $option['object_type'], $option['args']);
 			}
 		}
+		if(!empty(static::$_to_register_to_post_type))
+		{
+			foreach(static::$_to_register_to_post_type as $taxonomy=>$post_types)
+			{
+                foreach($post_types as $post_type)
+                {
+                    register_taxonomy_for_object_type($taxonomy, $post_type);
+                }
+			}
+		}
 	}
 
 	protected function __construct($taxonomy, $object_type = null, $args = array())
@@ -84,21 +95,21 @@ class Taxonomy
 		$this->_taxonomy = $taxonomy;
 
 		is_string($object_type) and $object_type = array($object_type);
-		
+
 		$this->_object_type = $object_type;
 
 		$this->_args = $this->_setDefaultArgs($args);
 
 		if (!static::exists($taxonomy))
 		{
-			add_action('init', array($this, 'wpRegister'));
+			static::register($this->_taxonomy, $this->_object_type, $this->_args);
 		}
 	}
 
 	protected function _setDefaultArgs($args = array())
 	{
 		$default_args = array();
-		
+
 		$default_args['labels']['name'] = _x(ucfirst($this->_taxonomy).'s', 'Post Type General Name', 'text_domain');
 		$default_args['labels']['singular_name'] = _x(ucfirst($this->_taxonomy), 'Post Type Singular Name', 'text_domain');
 
@@ -113,7 +124,7 @@ class Taxonomy
 		$default_args['labels']['search_items'] = __('Search '.$default_args['labels']['name'], 'text_domain');
 		$default_args['labels']['not_found'] = __('No '.strtolower($default_args['labels']['name']).' found', 'text_domain');
 		$default_args['labels']['not_found_in_trash'] = __('No '.strtolower($default_args['labels']['name']).' found in Trash', 'text_domain');
-		
+
 		$default_args['rewrite']['slug'] = $this->_taxonomy;
 
 		return array_merge($default_args, $args);
@@ -124,7 +135,7 @@ class Taxonomy
 		$args['taxonomy'] = $this->_taxonomy;
 		return new \WP_Query($args);
 	}
-	
+
 	public function getName()
 	{
 		return $this->_taxonomy;
@@ -145,11 +156,6 @@ class Taxonomy
 		return is_taxonomy_archive($this->_taxonomy);
 	}
 
-	public function wpRegister()
-	{
-		register_taxonomy($this->_taxonomy, $this->_object_type, $this->_args);
-	}
-
 	public function addField($type, $slug, $params = array())
 	{
 		$class_name = '\\Morepress\\Taxonomy\\Field\\'.ucfirst($type);
@@ -164,7 +170,7 @@ class Taxonomy
 		$this->registerOnSave();
 		add_action( $this->_taxonomy.'_edit_form_fields', $callback, 10, 2 );
 	}
-	
+
 	public function registerOnSave()
 	{
 		if(! $this->_onsave_registered)
@@ -173,7 +179,7 @@ class Taxonomy
 			$this->_onsave_registered = true;
 		}
 	}
-	
+
 	public function onSave($term_id, $tt_id)
 	{
 		if (isset($_POST['term_meta'])) {
@@ -182,9 +188,13 @@ class Taxonomy
 			foreach ($cat_keys as $key) {
 				$term_meta[$key] = $_POST['term_meta'][$key];
 			}
-			//save the option array  
+			//save the option array
 			update_option('taxonomy_term_'.$term_id, $term_meta);
 		}
 	}
+
+    public function registerToPostType($post_type) {
+        static::$_to_register_to_post_type[$this->_taxonomy][$post_type] = $post_type;
+    }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Morepress;
+namespace Morepress\Post;
 
 abstract class Field {
 
@@ -32,7 +32,7 @@ abstract class Field {
 
 	/**
 	 * @param $slug the slug wanted
-	 * @param null $desc Field description
+	 * @param null $desc \Morepress\Post\Field description
 	 * @param array $params Complementary params
 	 */
 	public function __construct($slug, $desc = null, $params = array()) {
@@ -131,21 +131,21 @@ abstract class Field {
 	}
 
 	/**
-	 * @return string Field ID getter
+	 * @return string \Morepress\Post\Field ID getter
 	 */
 	public function get_id() {
 		return $this->_id;
 	}
 
 	/**
-	 * @return string Field slug getter
+	 * @return string \Morepress\Post\Field slug getter
 	 */
 	public function get_slug() {
 		return $this->_slug;
 	}
 
 	/**
-	 * @return string Field label getter
+	 * @return string \Morepress\Post\Field label getter
 	 */
 	public function get_label() {
 		return $this->_label;

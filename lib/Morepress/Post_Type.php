@@ -47,7 +47,7 @@ class Post_Type
 	protected function _setDefaultArgs($args = array())
 	{
 		$default_args = array();
-		
+
 		$default_args['labels']['name'] = _x(ucfirst($this->_post_type).'s', 'Post Type General Name', 'text_domain');
 		$default_args['labels']['singular_name'] = _x(ucfirst($this->_post_type), 'Post Type Singular Name', 'text_domain');
 
@@ -62,9 +62,9 @@ class Post_Type
 		$default_args['labels']['search_items'] = __('Search '.$default_args['labels']['name'], 'text_domain');
 		$default_args['labels']['not_found'] = __('No '.strtolower($default_args['labels']['name']).' found', 'text_domain');
 		$default_args['labels']['not_found_in_trash'] = __('No '.strtolower($default_args['labels']['name']).' found in Trash', 'text_domain');
-		
+
 		$default_args['rewrite']['slug'] = $this->_post_type;
-		
+
 		if(isset($args['has_archive']) and $args['has_archive'] == true)
 		{
 			$default_args['show_in_nav_menus'] = true;
@@ -88,7 +88,7 @@ class Post_Type
 	{
 		return $this->_post_type;
 	}
-	
+
 	public function addSupport($support)
 	{
 		is_object($support) and $support = $support->getName();
@@ -155,7 +155,7 @@ class Post_Type
 		);
 		add_action($this->_action['name'], array($this, 'actionCallback'));
 	}
-	
+
 	public function actionCallback()
 	{
 		global $post;
@@ -176,5 +176,5 @@ class Post_Type
 			}
 		});
 	}
-	
+
 }

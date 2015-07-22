@@ -1,11 +1,22 @@
 <?php
 
-namespace Morepress\Field;
+namespace Morepress\Post\Field;
 
-class Select extends \Morepress\Field
+class PostTypeList extends \Morepress\Post\Field
 {
 
 	protected $_prefix_id = '';
+
+	protected function _get_post_types()
+	{
+            $return = array();
+            $post_types = \Morepress\Post_Type::find($this->_params['args'], 'object');
+            foreach($post_types as $name=>$post_type)
+            {
+                $return[$name] = $post_type->labels->name;
+            }
+            return $return;
+	}
 
 	public function html($meta, $repeatable = null){
 		is_array($meta) and $meta = null;
@@ -19,7 +30,7 @@ class Select extends \Morepress\Field
 			<td>
 				<select name="'.$name.'" id="'.$id . '" '.$this->_inputAttr().'>
 		';
-		foreach($this->_params['options'] as $key=>$value)
+		foreach($this->_get_post_types() as $key=>$value)
 		{
 			echo '<option '.(($key == $meta) ? 'selected' : '').' value="'.$key.'">'.$value.'</option>';
 		}

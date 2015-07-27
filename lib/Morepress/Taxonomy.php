@@ -182,6 +182,11 @@ class Taxonomy
 
 	public function onSave($term_id, $tt_id)
 	{
+        if(isset($_POST['term_meta_editor'])) {
+            foreach($_POST['term_meta_editor'] as $term_meta) {
+                $_POST['term_meta'][$term_meta] = $_POST[$term_meta];
+            }
+        }
 		if (isset($_POST['term_meta'])) {
 			$term_meta = get_option('taxonomy_term_'.$term_id);
 			$cat_keys = array_keys($_POST['term_meta']);
@@ -196,5 +201,10 @@ class Taxonomy
     public function registerToPostType($post_type) {
         static::$_to_register_to_post_type[$this->_taxonomy][$post_type] = $post_type;
     }
+
+	public function __get($name)
+	{
+		return $this->_taxonomy->{$name};
+	}
 
 }

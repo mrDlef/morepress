@@ -181,8 +181,10 @@ abstract class Field {
             if ($new !== null) {
                 // pre save allow special treatment for each field before saving
                 $new = $this->pre_save($post_id, $new, $old);
-                foreach ($new as $n) {
-                    add_post_meta($post_id, $this->get_id(), $n);
+                if(! empty($new)) {
+                    foreach ($new as $n) {
+                        add_post_meta($post_id, $this->get_id(), $n);
+                    }
                 }
 			}
 		} else { // Classic fields

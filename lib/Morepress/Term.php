@@ -42,4 +42,8 @@ class Term {
         return $this->_taxonomy;
     }
 
+    public function getLink() {
+        return get_term_link($this->_term, $this->_taxonomy);
+    }
+
 }

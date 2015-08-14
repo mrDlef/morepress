@@ -8,12 +8,12 @@ class Post {
 	protected $_terms = array();
 
     public static function forge($post = null) {
-        (empty($post) and is_single()) and $post = get_queried_object();
         return new static($post);
     }
 
-	public function __construct($post)
+	public function __construct($post = null)
 	{
+        empty($post) and $post = get_post($post);
 		is_numeric($post) and $post = get_post($post);
 		$this->_post = $post;
 	}

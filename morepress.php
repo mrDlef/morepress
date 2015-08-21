@@ -37,6 +37,8 @@ add_action('admin_enqueue_scripts', function($hook) {
 	wp_register_script('morepress-js', plugins_url('/js/script.js', __FILE__), array('jquery'), null, true);
 	$php_array = array('admin_ajax' => admin_url('admin-ajax.php'));
 	wp_localize_script('morepress-js', 'php_array', $php_array);
+
+	wp_enqueue_script('jquery-ui-autocomplete');
 	wp_enqueue_script('morepress-js');
 });
 

@@ -25,7 +25,7 @@ class Field extends \Morepress\Meta_Box
 	}
 
 	public function addFieldset($name, $legend, $repeatable = false) {
-		$this->_fieldsets[$name] = new \Morepress\Fieldset($name, $legend, $repeatable);
+		$this->_fieldsets[$name] = new \Morepress\Post\Fieldset($name, $legend, $repeatable);
 		return $this->_fieldsets[$name];
 	}
 

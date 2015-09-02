@@ -1,11 +1,12 @@
 <?php
 
-namespace Morepress\Field;
+namespace Morepress\Post\Field;
 
-class Text extends \Morepress\Field
+class Url extends \Morepress\Post\Field
 {
 
 	protected $_prefix_id = '';
+
 	public function html($meta, $repeatable = null){
 		is_array($meta) and $meta = null;
 		$name = is_null($repeatable) ? $this->_name : $this->_name.'['.$repeatable.']';
@@ -23,7 +24,7 @@ class Text extends \Morepress\Field
 				<label for="'.$id . '">'.$this->_label.'</label>
 			</th>
 			<td>
-				<input type="text" value="'.$meta.'" name="'.$name.'" id="'.$id . '"'.$classes.'>';
+				<input type="url" value="'.$meta.'" name="'.$name.'" id="'.$id . '"'.$classes.'>';
 		if(!empty($this->_description))
 		{
 			echo '<p class="description">' . $this->_description . '</p>';

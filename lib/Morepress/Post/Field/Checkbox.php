@@ -1,8 +1,8 @@
 <?php
 
-namespace Morepress\Field;
+namespace Morepress\Post\Field;
 
-class Checkbox extends \Morepress\Field
+class Checkbox extends \Morepress\Post\Field
 {
 
 	protected $_prefix_id = '';

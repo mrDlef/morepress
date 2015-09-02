@@ -18,7 +18,7 @@ class Fieldset {
 		add_action('edit_user_profile', array($this, 'render'));
 	}
 
-	function addField($type, $slug, $params = array())
+	public function addField($type, $slug, $params = array())
 	{
 		$class_name = 'Morepress\\User\\Field\\' . ucfirst($type);
 		if (class_exists($class_name)) {
@@ -28,7 +28,7 @@ class Fieldset {
 		return false;
 	}
 
-	function render($user) {
+	public function render($user) {
 		?>
 		<h3><?php echo $this->_title; ?></h3>
 

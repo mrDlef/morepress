@@ -5,9 +5,15 @@ namespace Morepress;
 class Post {
 
 	protected $_post;
+	protected $_terms = array();
 
-	public function __construct($post)
+    public static function forge($post = null) {
+        return new static($post);
+    }
+
+	public function __construct($post = null)
 	{
+        empty($post) and $post = get_post($post);
 		is_numeric($post) and $post = get_post($post);
 		$this->_post = $post;
 	}
@@ -51,5 +57,31 @@ class Post {
 	{
 		return $this->_post->{$name};
 	}
+
+	public function hasThumbnail()
+    {
+        return (bool) get_the_post_thumbnail($this->_post->ID);
+	}
+
+	public function getThumbnail($class = 'post-thumbnail', $icon = false)
+    {
+        return wp_get_attachment_image_src(get_post_thumbnail_id($this->_post->ID), $class, $icon);
+	}
+
+	public function getThumbnailURL($class = 'post-thumbnail', $icon = false)
+    {
+        $thumbnail = $this->getThumbnail($class, $icon);
+        if(! empty($thumbnail)) {
+            return $thumbnail[0];
+        }
+	}
+
+    public function getFirstTerm($taxonomy)
+    {
+        empty($this->_terms[$taxonomy]) and $this->_terms[$taxonomy] = get_the_terms(get_the_ID(), $taxonomy);
+        if(! empty($this->_terms[$taxonomy])) {
+            return \Morepress\Term::forge($this->_terms[$taxonomy][0]);
+        }
+    }
 
 }

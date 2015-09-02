@@ -1,6 +1,6 @@
 <?php
 
-namespace Morepress;
+namespace Morepress\Post;
 
 class Fieldset {
 
@@ -16,7 +16,7 @@ class Fieldset {
 	}
 
 	public function addField($type, $slug, $desc = null, $params = array()) {
-		$class_name = 'Morepress\\Field\\' . ucfirst($type);
+		$class_name = 'Morepress\\Post\\Field\\' . ucfirst($type);
 		if (class_exists($class_name)) {
 			$params = array_merge($params, array(
 				'grouped_repeatable' => $this->_repeatable,

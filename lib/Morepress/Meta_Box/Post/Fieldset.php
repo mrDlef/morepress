@@ -1,8 +1,8 @@
 <?php
 
-namespace Morepress\Meta_Box;
+namespace Morepress\Meta_Box\Post;
 
-class Field extends \Morepress\Meta_Box
+class Fieldset extends \Morepress\Meta_Box
 {
 	protected $_fields = array();
 
@@ -14,7 +14,7 @@ class Field extends \Morepress\Meta_Box
 	}
 
 	public function addField($type, $slug, $desc = null, $params = null) {
-		$class_name = 'Morepress\\Field\\' . ucfirst($type);
+		$class_name = 'Morepress\\Post\\Field\\' . ucfirst($type);
         $params['context'] = $this->_context;
 		if (class_exists($class_name))
 		{

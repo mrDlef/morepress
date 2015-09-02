@@ -1,8 +1,8 @@
 <?php
 
-namespace Morepress\Field;
+namespace Morepress\Post\Field;
 
-class PostList extends \Morepress\Field
+class PostList extends \Morepress\Post\Field
 {
 
 	protected $_prefix_id = '';

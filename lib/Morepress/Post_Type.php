@@ -46,25 +46,37 @@ class Post_Type
 
 	protected function _setDefaultArgs($args = array())
 	{
-		$default_args = array();
-		
-		$default_args['labels']['name'] = _x(ucfirst($this->_post_type).'s', 'Post Type General Name', 'text_domain');
-		$default_args['labels']['singular_name'] = _x(ucfirst($this->_post_type), 'Post Type Singular Name', 'text_domain');
+		$name = _x(ucfirst($this->_post_type).'s', 'Post Type General Name', 'text_domain');
+        isset($args['labels']['name']) and $name = $args['labels']['name'];
 
-		$default_args['labels']['menu_name'] = __($default_args['labels']['name'], 'text_domain');
-		$default_args['labels']['parent_item_colon'] = __('Parent '.$default_args['labels']['singular_name'].':', 'text_domain');
-		$default_args['labels']['all_items'] = __('All '.$default_args['labels']['name'], 'text_domain');
-		$default_args['labels']['view_item'] = __('View '.$default_args['labels']['singular_name'], 'text_domain');
-		$default_args['labels']['add_new_item'] = __('Add New '.$default_args['labels']['singular_name'], 'text_domain');
-		$default_args['labels']['add_new'] = __('New '.$default_args['labels']['singular_name'], 'text_domain');
-		$default_args['labels']['edit_item'] = __('Edit '.$default_args['labels']['singular_name'], 'text_domain');
-		$default_args['labels']['update_item'] = __('Update '.$default_args['labels']['singular_name'], 'text_domain');
-		$default_args['labels']['search_items'] = __('Search '.$default_args['labels']['name'], 'text_domain');
-		$default_args['labels']['not_found'] = __('No '.strtolower($default_args['labels']['name']).' found', 'text_domain');
-		$default_args['labels']['not_found_in_trash'] = __('No '.strtolower($default_args['labels']['name']).' found in Trash', 'text_domain');
-		
+		$singular_name = _x(ucfirst($this->_post_type), 'Post Type Singular Name', 'text_domain');
+        isset($args['labels']['singular_name']) and $singular_name = $args['labels']['singular_name'];
+
+		$default_args = array();
+
+		$default_args['labels']['name'] = $name;
+		$default_args['labels']['singular_name'] = $singular_name;
+
+		$default_args['labels']['menu_name'] = $name;
+		$default_args['labels']['parent_item_colon'] = __('Parent '.$singular_name.':', 'text_domain');
+		$default_args['labels']['all_items'] = __('All '.$name, 'text_domain');
+		$default_args['labels']['view_item'] = __('View '.$singular_name, 'text_domain');
+		$default_args['labels']['add_new_item'] = __('Add New '.$singular_name, 'text_domain');
+		$default_args['labels']['add_new'] = __('New '.$singular_name, 'text_domain');
+		$default_args['labels']['edit_item'] = __('Edit '.$singular_name, 'text_domain');
+		$default_args['labels']['update_item'] = __('Update '.$singular_name, 'text_domain');
+		$default_args['labels']['search_items'] = __('Search '.$name, 'text_domain');
+		$default_args['labels']['not_found'] = __('No '.strtolower($name).' found', 'text_domain');
+		$default_args['labels']['not_found_in_trash'] = __('No '.strtolower($name).' found in Trash', 'text_domain');
+
+        if(!empty($args['labels']))
+        {
+            $default_args['labels'] = array_merge($default_args['labels'], $args['labels']);
+            unset($args['labels']);
+        }
+
 		$default_args['rewrite']['slug'] = $this->_post_type;
-		
+
 		if(isset($args['has_archive']) and $args['has_archive'] == true)
 		{
 			$default_args['show_in_nav_menus'] = true;
@@ -88,7 +100,7 @@ class Post_Type
 	{
 		return $this->_post_type;
 	}
-	
+
 	public function addSupport($support)
 	{
 		is_object($support) and $support = $support->getName();
@@ -155,7 +167,7 @@ class Post_Type
 		);
 		add_action($this->_action['name'], array($this, 'actionCallback'));
 	}
-	
+
 	public function actionCallback()
 	{
 		global $post;
@@ -176,5 +188,5 @@ class Post_Type
 			}
 		});
 	}
-	
+
 }

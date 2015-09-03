@@ -7,6 +7,30 @@ class User {
 	protected static $_onsave_registered = false;
 	protected static $_fieldsets = array();
 
+    protected $_user;
+
+    public static function forge($user) {
+        return new static($user);
+    }
+
+    public function __construct($user) {
+        is_numeric($user) and $user = get_user_by('ID', $user);
+        $this->_user = $user;
+    }
+
+    public function update($data) {
+        $data = array_merge($data, array('ID' => $this->_user->ID));
+        return wp_update_user($data);
+    }
+
+    public static function fetch($args = array()) {
+        $users = array();
+        $q_user = new \WP_User_Query($args);
+        foreach($q_user->get_results() as $user) {
+            $users[$user->ID] = new static($user);
+        }
+        return $users;
+    }
 	public static function addFieldset($name, $title)
 	{
 		if (isset(static::$_fieldsets[$name])) {

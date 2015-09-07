@@ -14,7 +14,7 @@ class User {
     }
 
     public function __construct($user) {
-        is_numeric($user) and $user = get_user_by('ID', $user);
+        is_numeric($user) and $user = get_user_by('id', $user);
         $this->_user = $user;
     }
 
@@ -54,6 +54,15 @@ class User {
 		{
 			$fieldset->save($user_id);
 		}
+	}
+
+	public function __get($name)
+	{
+		return $this->_user->{$name};
+	}
+
+    public function getMeta($key = '', $single = false) {
+        return get_user_meta($this->_user->ID, $key, $single);
 	}
 
 }

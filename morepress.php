@@ -9,6 +9,11 @@
   Author URI: http://www.daidais.net
   License: MIT
  */
+$autoload_file = dirname(__FILE__).'/../../../vendor/autoload.php';
+if(file_exists($autoload_file)) {
+    require_once($autoload_file);
+}
+
 add_action('plugins_loaded', function() {
 	/* inject cpt archives meta box */
 	global $meta_box_nav_menu_post_type_archive;

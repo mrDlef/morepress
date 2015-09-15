@@ -19,5 +19,8 @@
         "psr-4": {
             "Morepress\\": "lib/Morepress/"
         }
+    },
+    "suggests": {
+        "willdurand/geocoder": "To be able to use full power of Position field"
     }
 }

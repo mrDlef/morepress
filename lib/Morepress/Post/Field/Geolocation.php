@@ -11,12 +11,13 @@ class Geolocation extends \Morepress\Post\Field {
         $name = is_null($repeatable) ? $this->_name : $this->_name . '[' . $repeatable . ']';
         $id = is_null($repeatable) ? $this->_id : $this->_id . '_' . $repeatable;
         $classes = array();
-        if (!empty($params['context']) and $params['context'] != 'side') {
-            $classes[] = 'large-text';
+        if(! empty($this->_params['context']) and $this->_params['context'] != 'side')
+        {
+            $classes[] = 'form-field';
         }
         $classes = implode(' ', $classes);
-        empty($classes) or $classes = ' class="' . $classes . '"';
-        echo '<tr class="form-field">';
+        empty($classes) or $classes = ' class="'.$classes.'"';
+		echo '<tr'.$classes.'>';
         echo '
 			<th>
 				<label for="' . $id . '_lat">' . $this->_label . '</label>

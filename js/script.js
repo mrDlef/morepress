@@ -25,25 +25,44 @@ jQuery(function (jQuery) {
         };
     }
 
-    $(document).on('click', '.custom_upload_image_button', function (e) {
-        var formfield = $(this).parent().parent().find('.custom_upload_image');
-        var preview = $(this).parent().parent().find('.custom_preview_image');
+    $(document).on('click', '.upload_image_button', function (e) {
+        var formfield = $(this).parent().parent().find('.upload_image');
+        var preview = $(this).parent().parent().find('.upload_preview');
         tb_show('', 'media-upload.php?type=image&TB_iframe=true');
         window.send_to_editor = function (html) {
             var imgurl = $('img', html).attr('src');
             var classes = $('img', html).attr('class');
             var id = classes.replace(/(.*?)wp-image-/, '');
             formfield.val(id);
-            preview.attr('src', imgurl);
+            preview.find('img').attr('src', imgurl);
             tb_remove();
+            return;
+        };
+        return e.preventDefault();
+    });
+    $(document).on('click', '.upload_button', function (e) {
+        var formfield = $(this).parent().parent().find('.upload');
+        var preview = $(this).parent().parent().find('.upload_preview');
+        tb_show('', 'media-upload.php?TB_iframe=true');
+        window.send_to_editor = function (html) {
+            var href = $(html).attr('href');
+            formfield.val(href);
+            preview.find('a').attr('href', href).text(href);
+            tb_remove();
+            return;
         };
         return e.preventDefault();
     });
 
-    $(document).on('click', '.custom_clear_image_button', function (e) {
-        var defaultImage = $(this).parent().parent().find('.custom_default_image').text();
-        $(this).parent().parent().find('.custom_upload_image').val('');
-        $(this).parent().parent().find('.custom_preview_image').attr('src', defaultImage);
+    $(document).on('click', '.clear_image_button', function (e) {
+        var defaultImage = $(this).parent().parent().find('.default_image').text();
+        $(this).parent().parent().find('.upload_image').val('');
+        $(this).parent().parent().find('.preview_image').attr('src', defaultImage);
+        return e.preventDefault();
+    });
+    $(document).on('click', '.clear_button', function (e) {
+        $(this).parent().parent().find('.upload').val('');
+        $(this).parent().parent().find('.upload_preview a').attr('href', '#').text('');
         return e.preventDefault();
     });
 
@@ -88,4 +107,4 @@ jQuery(function (jQuery) {
         initAutocomplete(this);
     });
 
-});  
+});

@@ -41,6 +41,14 @@ class Post {
 
 	public function getMeta($key = '', $single = false)
 	{
+        if(is_bool($key)) {
+            $all_meta = array();
+            $meta = $this->getMeta();
+            foreach($meta as $k=>$v) {
+                $all_meta[$k] = $this->getMeta($k, $key);
+            }
+            return $all_meta;
+        }
 		return get_post_meta($this->_post->ID, $key, $single);
 	}
 

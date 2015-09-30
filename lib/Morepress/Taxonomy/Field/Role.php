@@ -16,10 +16,10 @@ class Role extends \Morepress\Taxonomy\Field
         ?>
 			<tr class="form-field">
 				<th scope="row" valign="top">
-					<label for="term_meta[<?php echo $this->_slug; ?>]"><?php echo $this->_params['label']; ?></label>
+					<label for="term_meta_<?php echo $this->_slug; ?>"><?php echo $this->_params['label']; ?></label>
 				</th>
 				<td>
-                    <select name="term_meta[<?php echo $this->_slug; ?>]"  id="term_meta_<?php echo $this->_slug; ?>">
+                    <select id="term_meta_<?php echo $this->_slug; ?>" name="term_meta[<?php echo $this->_slug; ?>]"  id="term_meta_<?php echo $this->_slug; ?>">
                         <?php wp_dropdown_roles($mp_term->getMeta($this->_slug)); ?>
                     </select>
 					<?php if(! empty($this->_params['description'])) : ?>

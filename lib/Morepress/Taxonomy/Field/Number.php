@@ -16,10 +16,10 @@ class Number extends \Morepress\Taxonomy\Field
         ?>
 			<tr class="form-field">
 				<th scope="row" valign="top">
-					<label for="term_meta[<?php echo $this->_slug; ?>]"><?php echo $this->_params['label']; ?></label>
+					<label for="term_meta_<?php echo $this->_slug; ?>"><?php echo $this->_params['label']; ?></label>
 				</th>
 				<td>
-                    <input name="term_meta[<?php echo $this->_slug; ?>]" type="number" value="<?php echo esc_attr($mp_term->getMeta($this->_slug)); ?>">
+                    <input id="term_meta_<?php echo $this->_slug; ?>" name="term_meta[<?php echo $this->_slug; ?>]" type="number" value="<?php echo esc_attr($mp_term->getMeta($this->_slug)); ?>">
 					<?php if(! empty($this->_params['description'])) : ?>
 						<p class="description"><?php echo $this->_params['description']; ?></p>
 					<?php endif; ?>

@@ -11,19 +11,19 @@ class Text extends \Morepress\Post\Field
 		$name = is_null($repeatable) ? $this->_name : $this->_name.'['.$repeatable.']';
 		$id = is_null($repeatable) ? $this->_id : $this->_id.'_'.$repeatable;
         $classes = array();
-        if(! empty($params['context']) and $params['context'] != 'side')
+        if(! empty($this->_params['context']) and $this->_params['context'] != 'side')
         {
-            $classes[] = 'large-text';
+            $classes[] = 'form-field';
         }
         $classes = implode(' ', $classes);
         empty($classes) or $classes = ' class="'.$classes.'"';
-		echo '<tr class="form-field">';
+		echo '<tr'.$classes.'>';
 		echo '
 			<th>
 				<label for="'.$id . '">'.$this->_label.'</label>
 			</th>
 			<td>
-				<input type="text" value="'.$meta.'" name="'.$name.'" id="'.$id . '"'.$classes.'>';
+				<input type="text" value="'.$meta.'" name="'.$name.'" id="'.$id . '" '.$this->_inputAttr().'>';
 		if(!empty($this->_description))
 		{
 			echo '<p class="description">' . $this->_description . '</p>';

@@ -11,6 +11,16 @@
         }
     ],
     "require": {
-        "composer/installers": "~1.0"
+        "php": ">=5.4",
+        "composer/installers": "~1.0",
+        "wpackagist-plugin/wp-autoloader": "2.0.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Morepress\\": "lib/Morepress/"
+        }
+    },
+    "suggests": {
+        "willdurand/geocoder": "To be able to use full power of Position field"
     }
 }

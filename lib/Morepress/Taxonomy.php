@@ -15,6 +15,7 @@ class Taxonomy
 	protected static $_to_register_to_post_type = array();
 	protected static $_on_init_registered = false;
 
+    protected $_events = array();
 	public static function forge($taxonomy, $object_type = null, $args = array())
 	{
 		if (isset(static::$_taxonomies[$taxonomy]))
@@ -180,6 +181,11 @@ class Taxonomy
 		}
 	}
 
+	public function on($event_name, $callback)
+	{
+        $this->_events[$event_name] = $callback;
+	}
+
 	public function onSave($term_id, $tt_id)
 	{
         if(isset($_POST['term_meta_editor'])) {
@@ -193,9 +199,11 @@ class Taxonomy
 			foreach ($cat_keys as $key) {
 				$term_meta[$key] = $_POST['term_meta'][$key];
 			}
+            empty($this->_events['before_save']) or $this->_events['before_save']($term_id, $term_meta);
 			//save the option array
 			update_option('taxonomy_term_'.$term_id, $term_meta);
 		}
+        empty($this->_events['after_save']) or $this->_events['after_save']($term_id, $term_meta);
 	}
 
     public function registerToPostType($post_type) {

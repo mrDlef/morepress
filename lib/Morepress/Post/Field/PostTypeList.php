@@ -22,13 +22,20 @@ class PostTypeList extends \Morepress\Post\Field
 		is_array($meta) and $meta = null;
 		$name = is_null($repeatable) ? $this->_name : $this->_name.'['.$repeatable.']';
 		$id = is_null($repeatable) ? $this->_id : $this->_id.'_'.$repeatable;
-		echo '<tr class="form-field">';
+        $classes = array();
+        if(! empty($this->_params['context']) and $this->_params['context'] != 'side')
+        {
+            $classes[] = 'form-field';
+        }
+        $classes = implode(' ', $classes);
+        empty($classes) or $classes = ' class="'.$classes.'"';
+		echo '<tr'.$classes.'>';
 		echo '
 			<th>
 				<label for="'.$id . '">'.$this->_label.'</label>
 			</th>
 			<td>
-				<select name="'.$name.'" id="'.$id . '" '.$this->_inputAttr().'>
+				<select name="'.$name.'" id="'.$id . '" '.$this->_inputAttr().'" '.$this->_inputAttr().'>
 		';
 		foreach($this->_get_post_types() as $key=>$value)
 		{

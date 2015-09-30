@@ -2,7 +2,7 @@
 
 namespace Morepress\Post\Field;
 
-class Checkbox extends \Morepress\Post\Field
+class File extends \Morepress\Post\Field
 {
 
 	protected $_prefix_id = '';
@@ -19,13 +19,17 @@ class Checkbox extends \Morepress\Post\Field
         empty($classes) or $classes = ' class="'.$classes.'"';
 		echo '<tr'.$classes.'>';
 		echo '
-			<th></th>
+			<th>
+				<label for="'.$id . '">'.$this->_label.'</label>
+			</th>
 			<td>
-				<label for="'.$id . '">
-					<input type="hidden" value="0" name="'.$name.'">
-					<input type="checkbox" value="1" name="'.$name.'" id="'.$id . '" '. ($meta ? ' checked="checked"' : '') .' '.$this->_inputAttr().'>
-					'.$this->_label.'
-				</label>';
+				<input name="'.$name.'" type="hidden" class="upload" value="'.$meta.'">
+                <div class="upload_preview"><a href="'.$meta.'" target="_blank">'.$meta.'</a></div>
+				<p>
+					<input class="upload_button button" type="button" value="Choisir un fichier">
+					<a href="#" class="clear_button button">Supprimer le fichier</a>
+				</p>
+			';
 		if(!empty($this->_description))
 		{
 			echo '<p class="description">' . $this->_description . '</p>';

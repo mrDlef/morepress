@@ -2,10 +2,10 @@
 
 namespace Morepress\Taxonomy\Field;
 
-class Number extends \Morepress\Taxonomy\Field
+class Role extends \Morepress\Taxonomy\Field
 {
 	protected $_taxonomy;
-	protected $_type = 'number';
+	protected $_type = 'role';
 	protected $_slug;
 	protected $_params = array();
 
@@ -19,7 +19,9 @@ class Number extends \Morepress\Taxonomy\Field
 					<label for="term_meta_<?php echo $this->_slug; ?>"><?php echo $this->_params['label']; ?></label>
 				</th>
 				<td>
-                    <input id="term_meta_<?php echo $this->_slug; ?>" name="term_meta[<?php echo $this->_slug; ?>]" type="number" value="<?php echo esc_attr($mp_term->getMeta($this->_slug)); ?>">
+                    <select id="term_meta_<?php echo $this->_slug; ?>" name="term_meta[<?php echo $this->_slug; ?>]"  id="term_meta_<?php echo $this->_slug; ?>">
+                        <?php wp_dropdown_roles($mp_term->getMeta($this->_slug)); ?>
+                    </select>
 					<?php if(! empty($this->_params['description'])) : ?>
 						<p class="description"><?php echo $this->_params['description']; ?></p>
 					<?php endif; ?>

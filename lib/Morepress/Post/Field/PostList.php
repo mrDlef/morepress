@@ -38,13 +38,20 @@ class PostList extends \Morepress\Post\Field
 		$id = is_null($repeatable) ? $this->_id : $this->_id.'_'.$repeatable;
 		$items = $this->_get_posts();
 		empty($meta) or $post = get_post($meta);
-		echo '<tr class="form-field">';
+        $classes = array();
+        if(! empty($this->_params['context']) and $this->_params['context'] != 'side')
+        {
+            $classes[] = 'form-field';
+        }
+        $classes = implode(' ', $classes);
+        empty($classes) or $classes = ' class="'.$classes.'"';
+		echo '<tr'.$classes.'>';
 		echo '
 			<th>
 				<label for="'.$id . '">'.$this->_label.'</label>
 			</th>
 			<td>
-				<input data-callback="'.$this->_id.'" type="text" class="morepress_post_list" value="'.(isset($post->post_title) ? $post->post_title : '').'" id="'.$id . '" placeholder="Commencez à tapper...">
+				<input data-callback="'.$this->_id.'" type="text" class="morepress_post_list" value="'.(isset($post->post_title) ? $post->post_title : '').'" id="'.$id . '" placeholder="Commencez à tapper..." '.$this->_inputAttr().'>
 				<input type="hidden" value="'.(isset($post->ID) ? $post->ID : '').'" name="'.$name.'">
 		';
 		if(!empty($this->_description))

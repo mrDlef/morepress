@@ -179,10 +179,12 @@ class Post_Type
 	public function removeAddLink() {
 		\Morepress\Admin\Menu::removeSub('edit.php?post_type='.$this->_post_type, 'post-new.php?post_type='.$this->_post_type);
 		add_action('admin_head', function() {
-			if ($this->_post_type == get_post_type()) {
+			if ($this->_post_type == get_query_var('post_type')) {
 				echo '
 					<style type="text/css">
-						.add-new-h2{display:none;}
+						.page-title-action {
+                            display:none !important;
+                        }
 					</style>
 				';
 			}

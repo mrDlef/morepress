@@ -21,6 +21,9 @@ class Fieldset extends \Morepress\Meta_Box
 			$this->_fields[$slug] = new $class_name($slug, $desc, $params);
 			return true;
 		}
+        else {
+            throw new \Exception('Field type doesn\'t exists');
+        }
 		return false;
 	}
 

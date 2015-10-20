@@ -48,9 +48,11 @@ add_action('admin_enqueue_scripts', function($hook) {
 });
 
 function morepress_get_term_image($term, $slug, $size = 'thumbnail', $icon = false) {
-	$presenter_custom_fields = get_option('taxonomy_term_' . $term->term_id);
-	if (!empty($presenter_custom_fields[$slug])) {
-		return wp_get_attachment_image_src($presenter_custom_fields[$slug], $size, $icon);
+    if(! empty($term->term_id)) {
+        $presenter_fields = get_option('taxonomy_term_' . $term->term_id);
+        if (!empty($presenter_fields[$slug])) {
+            return wp_get_attachment_image_src($presenter_fields[$slug], $size, $icon);
+        }
 	}
 	return false;
 }

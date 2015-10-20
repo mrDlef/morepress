@@ -20,11 +20,11 @@ class Image extends \Morepress\User\Field
 		echo '<tr>';
 		echo '<th><label for="'.$this->_id.'">'.$this->_params['label'].'</label></th>';
 		echo '<td>
-			<input name="'.$this->_name.'" type="hidden" class="custom_upload_image" value="'.$meta.'" '.$this->_inputAttr().'>
-			<img src="'.$image.'" class="custom_preview_image" height="150" alt="">
+			<input name="'.$this->_name.'" type="hidden" class="upload_image" value="'.$meta.'" '.$this->_inputAttr().'>
+			<img src="'.$image.'" class="preview_image" height="150" alt="">
 			<p>
-				<input class="custom_upload_image_button button" type="button" value="Choisir une image">
-				<a href="#" class="custom_clear_image_button button">Supprimer l\'image</a>
+				<input class="upload_image_button button" type="button" value="Choisir une image">
+				<a href="#" class="clear_image_button button">Supprimer l\'image</a>
 			</p>
 			' . $this->_description() . '
 		</td>';

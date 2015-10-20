@@ -122,7 +122,7 @@ class Fieldset extends \Morepress\Meta_Box
 	}
 
 	public function callback($post) {
-		echo '<input type="hidden" name="custom_meta_box_nonce" value="' . wp_create_nonce(basename(__FILE__)) . '" />';
+		echo '<input type="hidden" name="meta_box_nonce" value="' . wp_create_nonce(basename(__FILE__)) . '" />';
 		$this->render($this->_fields, $post);
 		if (! empty($this->_fieldsets)) {
 			echo '<fieldset>';
@@ -134,11 +134,11 @@ class Fieldset extends \Morepress\Meta_Box
 	}
 
 	public function saveData($post_id) {
-		if (!isset($_POST['custom_meta_box_nonce'])) {
+		if (!isset($_POST['meta_box_nonce'])) {
 			return $post_id;
 		}
 		// verify nonce
-		if (!wp_verify_nonce($_POST['custom_meta_box_nonce'], basename(__FILE__)))
+		if (!wp_verify_nonce($_POST['meta_box_nonce'], basename(__FILE__)))
 			return $post_id;
 		// check autosave
 		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)

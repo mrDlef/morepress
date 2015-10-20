@@ -9,11 +9,13 @@ class Term {
     protected $_taxonomy;
 
     public static function forge($term = null, $taxonomy = null) {
-        (empty($term) and is_tax()) and $term = get_queried_object();
+        if(is_tax($taxonomy)) {
+            empty($term) and $term = get_queried_object();
+        }
         return new static($term, $taxonomy);
     }
 
-    public function __construct($term, $taxonomy = null) {
+    public function __construct($term, $taxonomy) {
         is_numeric($term) and $term = get_term($term, $taxonomy);
         $this->_term = $term;
     }
@@ -26,6 +28,21 @@ class Term {
         return $this->_term->{$name};
     }
 
+    public function __isset($name) {
+        if(isset($this->_term->{$name})) {
+            return true;
+        }
+        return isset($this->{$name});
+    }
+
+    public static function fetch($taxonomies, $args = '') {
+        $result = get_terms($taxonomies, $args);
+        $terms = array();
+        foreach($result as $result) {
+            $terms[] = static::forge($result, $result->taxonomy);
+        }
+        return $terms;
+    }
     public function getMeta($key = null) {
         empty($this->_meta) and $this->_meta = stripslashes_deep(get_option('taxonomy_term_' . $this->_term->term_id));
 
@@ -44,6 +61,15 @@ class Term {
 
     public function getLink() {
         return get_term_link($this->_term, $this->_taxonomy);
+    }
+
+    public function getChildren() {
+        $children = array();
+        print_r($this->_taxonomy);
+        foreach(get_term_children($this->term_id, $this->taxonomy) as $term_id) {
+            $children[] = static::forge($term_id, $this->taxonomy);
+        }
+        return $children;
     }
 
 }

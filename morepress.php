@@ -9,6 +9,7 @@
   Author URI: http://www.daidais.net
   License: MIT
  */
+define('MOREPRESS_PLUGIN_FILE', __FILE__);
 $autoload_file = dirname(__FILE__).'/../../../vendor/autoload.php';
 if(file_exists($autoload_file)) {
     require_once($autoload_file);
@@ -63,3 +64,11 @@ function morepress_get_user_meta_image($user, $slug, $size = 'thumbnail', $icon 
 	}
 	return false;
 }
+
+if ( ! function_exists('morepress_shortcode')) :
+    function morepress_shortcode($name, $title, $callback = null, $fields = null) {
+        \Morepress\Shortcode::forge($name, $title, $callback, $fields);
+    }
+endif;
+
+\Morepress\Shortcode_Manager::forge();

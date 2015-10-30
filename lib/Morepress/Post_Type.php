@@ -41,6 +41,7 @@ class Post_Type
 		if (!static::exists($post_type))
 		{
 			add_action('init', array($this, 'wpRegister'));
+            add_action('generate_rewrite_rules', array($this, 'wpGenerateRewriteRules'));
 		}
 	}
 
@@ -147,6 +148,49 @@ class Post_Type
 		register_post_type($this->_post_type, $this->_args);
 	}
 
+	public function wpGenerateRewriteRules($wp_rewrite) {
+        $rules = array();
+
+        if (!$this->_args['has_archive']) {
+            return $wp_rewrite;
+        }
+
+        $slug = $this->_args['rewrite']['slug'];
+
+        $dates = array(
+            array(
+                'rule' => "([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})",
+                'vars' => array('year', 'monthnum', 'day')
+            ),
+            array(
+                'rule' => "([0-9]{4})/([0-9]{1,2})",
+                'vars' => array('year', 'monthnum')
+            ),
+            array(
+                'rule' => "([0-9]{4})",
+                'vars' => array('year')
+            ),
+        );
+
+        foreach ($dates as $data) {
+            $query = 'index.php?post_type=' . $this->_post_type;
+            $rule = $slug . '/' . $data['rule'];
+
+            $i = 1;
+            foreach ($data['vars'] as $var) {
+                $query.= '&' . $var . '=' . $wp_rewrite->preg_index($i);
+                $i++;
+            }
+
+            $rules[$rule . "/?$"] = $query;
+            $rules[$rule . "/feed/(feed|rdf|rss|rss2|atom)/?$"] = $query . "&feed=" . $wp_rewrite->preg_index($i);
+            $rules[$rule . "/(feed|rdf|rss|rss2|atom)/?$"] = $query . "&feed=" . $wp_rewrite->preg_index($i);
+            $rules[$rule . "/page/([0-9]{1,})/?$"] = $query . "&paged=" . $wp_rewrite->preg_index($i);
+        }
+
+        $wp_rewrite->rules = $rules + $wp_rewrite->rules;
+        return $wp_rewrite;
+    }
 	public function wpAddSupport()
 	{
 		add_post_type_support($this->_post_type, $this->_add_support);
@@ -189,6 +233,48 @@ class Post_Type
 				';
 			}
 		});
+	}
+
+    public function getLinkArchive() {
+        return get_post_type_archive_link($this->_post_type);
+    }
+
+    public function getLinkDate($year = null, $month = null, $day = null) {
+        global $wp_rewrite;
+        $post_type_slug = $this->_args['rewrite']['slug'];
+        if ($day) {
+            $year or $year = gmdate('Y', current_time('timestamp'));
+            $month or $month = gmdate('m', current_time('timestamp'));
+            $permastruct = $wp_rewrite->get_day_permastruct();
+        }
+        elseif ($month) {
+            $year or $year = gmdate('Y', current_time('timestamp'));
+            $permastruct = $wp_rewrite->get_month_permastruct();
+        } else {
+            $permastruct = $wp_rewrite->get_year_permastruct();
+        }
+        if (!empty($permastruct)) {
+            $search = array(
+                '%year%',
+                '%monthnum%',
+                '%day%',
+            );
+            $replace = array(
+                $year,
+                zeroise(intval($month), 2),
+                zeroise(intval($day), 2),
+            );
+            $link = str_replace($search, $replace, $permastruct);
+            return $this->getLinkArchive().$link;
+        }
+
+        return $this->getLinkArchive();
+    }
+
+    public function getArg($key) {
+        if(isset($this->_args[$key])) {
+            return $this->_args[$key];
+        }
 	}
 
 }

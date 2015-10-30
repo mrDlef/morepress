@@ -2,13 +2,14 @@
 
 /*
   Plugin Name: Morepress
-  Version: 0.4.0
+  Version: 0.7.0
   Plugin URI: https://github.com/daidais/morepress
   Description: Framework to do lots of things programmatically with pleasure
   Author: Denis Favreau
   Author URI: http://www.daidais.net
   License: MIT
  */
+define('MOREPRESS_PLUGIN_FILE', __FILE__);
 $autoload_file = dirname(__FILE__).'/../../../vendor/autoload.php';
 if(file_exists($autoload_file)) {
     require_once($autoload_file);
@@ -48,9 +49,11 @@ add_action('admin_enqueue_scripts', function($hook) {
 });
 
 function morepress_get_term_image($term, $slug, $size = 'thumbnail', $icon = false) {
-	$presenter_custom_fields = get_option('taxonomy_term_' . $term->term_id);
-	if (!empty($presenter_custom_fields[$slug])) {
-		return wp_get_attachment_image_src($presenter_custom_fields[$slug], $size, $icon);
+    if(! empty($term->term_id)) {
+        $presenter_fields = get_option('taxonomy_term_' . $term->term_id);
+        if (!empty($presenter_fields[$slug])) {
+            return wp_get_attachment_image_src($presenter_fields[$slug], $size, $icon);
+        }
 	}
 	return false;
 }
@@ -61,3 +64,11 @@ function morepress_get_user_meta_image($user, $slug, $size = 'thumbnail', $icon 
 	}
 	return false;
 }
+
+if ( ! function_exists('morepress_shortcode')) :
+    function morepress_shortcode($name, $title, $callback = null, $fields = null) {
+        \Morepress\Shortcode::forge($name, $title, $callback, $fields);
+    }
+endif;
+
+\Morepress\Shortcode_Manager::forge();

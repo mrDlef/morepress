@@ -8,7 +8,7 @@ use \Morepress\Post_Type as Post_Type;
 class Post_Type_Archive extends Meta_Box
 {
 
-	public function callback()
+	public function callback($params)
 	{
 		global $_nav_menu_placeholder, $nav_menu_selected_id;
 

@@ -69,8 +69,8 @@ jQuery(function (jQuery) {
     // Reapeatable fields
     $(document).on('click', '.repeatable-add', function (e) {
 
-        var field = $(this).closest('td').find('.custom_repeatable li:last').clone(true);
-        var fieldLocation = $(this).closest('td').find('.custom_repeatable li:last');
+        var field = $(this).closest('td').find('.repeatable li:last').clone(true);
+        var fieldLocation = $(this).closest('td').find('.repeatable li:last');
         field.insertAfter(fieldLocation, $(this).closest('td'));
         return e.preventDefault();
     });
@@ -78,13 +78,6 @@ jQuery(function (jQuery) {
     $(document).on('click', '.repeatable-remove', function (e) {
         $(this).parent().remove();
         return e.preventDefault();
-    });
-
-    $('.custom_repeatable').sortable({
-        opacity: 0.6,
-        revert: true,
-        cursor: 'move',
-        handle: '.sort'
     });
 
     // Reapeatable fieldset

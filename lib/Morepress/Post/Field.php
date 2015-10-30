@@ -57,7 +57,7 @@ abstract class Field {
 	 */
 	public function output_repeatable($meta) {
 		$html = '<a class="repeatable-add button" href="#">+</a>
-            	<ul id="' . $this->_id . '-repeatable" class="custom_repeatable">';
+            	<ul id="' . $this->_id . '-repeatable" class="repeatable">';
 		if ($meta) {
 			foreach ($meta as $row) {
 				$html .= '<li><span class="sort hndle">|||</span>';

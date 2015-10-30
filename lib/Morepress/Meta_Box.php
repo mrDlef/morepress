@@ -34,7 +34,7 @@ abstract class Meta_Box
 		add_action( 'add_meta_boxes', array($this, 'add') );
 	}
 
-	public function callback()
+	public function callback($params)
 	{
 		
 	}

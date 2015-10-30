@@ -25,11 +25,11 @@ class Image extends \Morepress\Taxonomy\Field
 					<label for="term_meta_<?php echo $this->_slug; ?>"><?php echo $this->_params['label']; ?></label>
 				</th>
 				<td>
-					<input id="term_meta_<?php echo $this->_slug; ?>" name="term_meta[<?php echo $this->_slug; ?>]" type="hidden" class="custom_upload_image" value="<?php echo esc_attr($term_meta[$this->_slug]) ? esc_attr($term_meta[$this->_slug]) : ''; ?>">
-					<img src="<?php echo $image; ?>" class="custom_preview_image" height="150" alt="">
+					<input id="term_meta_<?php echo $this->_slug; ?>" name="term_meta[<?php echo $this->_slug; ?>]" type="hidden" class="upload_image" value="<?php echo esc_attr($term_meta[$this->_slug]) ? esc_attr($term_meta[$this->_slug]) : ''; ?>">
+					<img src="<?php echo $image; ?>" class="preview_image" height="150" alt="">
 					<p>
-						<input class="custom_upload_image_button button" type="button" value="Choisir une image">
-						<a href="#" class="custom_clear_image_button button">Supprimer l'image</a>
+						<input class="upload_image_button button" type="button" value="Choisir une image">
+						<a href="#" class="clear_image_button button">Supprimer l'image</a>
 					</p>
 					<?php if(! empty($this->_params['description'])) : ?>
 						<p class="description"><?php echo $this->_params['description']; ?></p>

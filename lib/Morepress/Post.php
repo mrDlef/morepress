@@ -71,14 +71,14 @@ class Post {
         return (bool) get_the_post_thumbnail($this->_post->ID);
 	}
 
-	public function getThumbnail($class = 'post-thumbnail', $icon = false)
+	public function getThumbnail($size = 'post-thumbnail', $icon = false)
     {
-        return wp_get_attachment_image_src(get_post_thumbnail_id($this->_post->ID), $class, $icon);
+        return wp_get_attachment_image_src(get_post_thumbnail_id($this->_post->ID), $size, $icon);
 	}
 
-	public function getThumbnailURL($class = 'post-thumbnail', $icon = false)
+	public function getThumbnailURL($size = 'post-thumbnail', $icon = false)
     {
-        $thumbnail = $this->getThumbnail($class, $icon);
+        $thumbnail = $this->getThumbnail($size, $icon);
         if(! empty($thumbnail)) {
             return $thumbnail[0];
         }

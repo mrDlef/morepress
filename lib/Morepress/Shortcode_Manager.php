@@ -26,6 +26,8 @@ class Shortcode_Manager {
 
     public static function add_head_shortcode() {
         $forges = Shortcode::get_shortcodes();
+        $list_shortcodes= array();
+        $res = array();
         foreach ($forges as $forge) {
             $list_shortcodes[] = $forge->get_title();
             // Check if some treatment is necessary for filepicker fields
@@ -37,10 +39,10 @@ class Shortcode_Manager {
                 'fields' => $forge->get_fields()
             );
         }
-        $res = json_encode($res);
+        $res = empty($list_shortcodes) ? '{}' : json_encode($res);
         // Delete string for function() onclick on filepicker
         $res = str_replace(array('"__', '__"'), '', $res);
-        $list = json_encode($list_shortcodes);
+        $list = empty($list_shortcodes) ? '[]' : json_encode($list_shortcodes);
         ?>
         <script type="text/javascript">
             var list_morepress_shortcodes = <?php echo $list; ?>;

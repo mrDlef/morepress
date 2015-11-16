@@ -66,6 +66,12 @@ class Post {
 		return $this->_post->{$name};
 	}
 
+    public function __isset($name) {
+        if(isset($this->_post->{$name})) {
+            return true;
+        }
+        return isset($this->{$name});
+    }
 	public function hasThumbnail()
     {
         return (bool) get_the_post_thumbnail($this->_post->ID);

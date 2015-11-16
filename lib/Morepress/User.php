@@ -74,6 +74,13 @@ class User {
 		return $this->_user->{$name};
 	}
 
+    public function __isset($name) {
+        if(isset($this->_user->{$name})) {
+            return true;
+        }
+        return isset($this->{$name});
+    }
+
 	public function getWpObject()
 	{
 		return $this->_user;

@@ -9,9 +9,20 @@ class Shortcode_Manager {
      */
     public static function forge() {
         add_action('admin_head', array(get_called_class(), 'action_admin_init'));
+        add_filter('the_content', array(__CLASS__, 'the_content'));
         if (is_admin()) {
             add_action('admin_head', array(get_called_class(), 'add_head_shortcode'));
         }
+    }
+
+    public static function the_content($content) {
+        $array = array(
+            '<p>[' => '[',
+            ']</p>' => ']',
+            ']<br />' => ']'
+        );
+        $content = strtr($content, $array);
+        return $content;
     }
 
     /**

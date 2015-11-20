@@ -98,4 +98,9 @@ class Post {
         }
     }
 
+    public function delete($force_delete = false)
+    {
+        wp_delete_post($this->_post->ID, $force_delete);
+    }
+
 }

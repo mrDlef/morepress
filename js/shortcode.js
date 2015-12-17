@@ -16,10 +16,15 @@
 				fixedWidth: true,
 				onselect: function(e) {
 					if (e) {
-						var obj_json_shortcode = morepress_shortcodes[e.control.settings.value];
+						var obj_json_shortcode = morepress_shortcodes[e.control.settings.value]
+                           , selected = tinyMCE.activeEditor.selection.getContent();
 
 						if (obj_json_shortcode['is_immediat']) {
-							editor.insertContent(obj_json_shortcode['shortcode']);
+                            var output = '['+ obj_json_shortcode['name']+']';
+                            if(selected) {
+                                output += selected+'[/'+obj_json_shortcode['name']+']';
+                            }
+							editor.insertContent(output);
 						} else {
 							editor.windowManager.open( {
 								title: 'Shortcode : '+ e.control.settings.value,
@@ -39,7 +44,10 @@
 										}
 									}
 
-									output += '][/'+obj_json_shortcode['name']+']';
+                                    output += ']';
+                                    if(selected) {
+                                        output += selected+'[/'+obj_json_shortcode['name']+']';
+                                    }
 									editor.insertContent( output );
 								}
 							});

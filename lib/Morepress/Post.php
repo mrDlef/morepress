@@ -39,6 +39,10 @@ class Post {
 		return update_post_meta($this->_post->ID, $meta_key, $meta_value, $prev_value);
 	}
 
+	public function meta($key = '', $single = false)
+	{
+        echo $this->getMeta($key, $single);
+	}
 	public function getMeta($key = '', $single = false)
 	{
         if(is_bool($key)) {
@@ -50,6 +54,11 @@ class Post {
             return $all_meta;
         }
 		return get_post_meta($this->_post->ID, $key, $single);
+	}
+
+	public function getPermalink($leavename = false)
+	{
+		return get_permalink($this->_post->ID, $leavename);
 	}
 
 	public function getTime($d = '')
@@ -80,6 +89,11 @@ class Post {
 	public function getThumbnail($size = 'post-thumbnail', $icon = false)
     {
         return wp_get_attachment_image_src(get_post_thumbnail_id($this->_post->ID), $size, $icon);
+	}
+
+	public function thumbnailURL($size = 'post-thumbnail', $icon = false)
+    {
+        echo $this->getThumbnailURL($size, $icon);
 	}
 
 	public function getThumbnailURL($size = 'post-thumbnail', $icon = false)

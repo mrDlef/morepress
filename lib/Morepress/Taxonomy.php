@@ -8,11 +8,13 @@ class Taxonomy
 	protected static $_taxonomies = array();
 	protected $_taxonomy;
 	protected $_object_type;
+    protected $_object;
 	protected $_args;
 	protected $_onsave_registered = false;
 	protected static $_to_register = array();
 	protected static $_to_unregister = array();
 	protected static $_to_register_to_post_type = array();
+	protected static $_to_unregister_to_post_type = array();
 	protected static $_on_init_registered = false;
 
     protected $_events = array();
@@ -79,6 +81,16 @@ class Taxonomy
 				register_taxonomy($taxonomy, $option['object_type'], $option['args']);
 			}
 		}
+		if(!empty(static::$_to_unregister_to_post_type))
+		{
+			foreach(static::$_to_unregister_to_post_type as $taxonomy=>$post_types)
+			{
+                foreach($post_types as $post_type)
+                {
+                    unregister_taxonomy_for_object_type($taxonomy, $post_type);
+                }
+			}
+		}
 		if(!empty(static::$_to_register_to_post_type))
 		{
 			foreach(static::$_to_register_to_post_type as $taxonomy=>$post_types)
@@ -127,6 +139,7 @@ class Taxonomy
 		$default_args['labels']['not_found_in_trash'] = __('No '.strtolower($default_args['labels']['name']).' found in Trash', 'text_domain');
 
 		$default_args['rewrite']['slug'] = $this->_taxonomy;
+        $default_args['show_admin_column'] = true;
 
 		return array_merge($default_args, $args);
 	}
@@ -144,7 +157,9 @@ class Taxonomy
 
 	public function getObject()
 	{
-		return get_taxonomy_object($this->_taxonomy);
+        empty($this->_object) and $this->_object = get_taxonomy($this->_taxonomy);
+
+		return $this->_object;
 	}
 
 	public function isHierarchical()
@@ -210,9 +225,14 @@ class Taxonomy
         static::$_to_register_to_post_type[$this->_taxonomy][$post_type] = $post_type;
     }
 
+    public function unregisterToPostType($post_type) {
+        static::$_to_unregister_to_post_type[$this->_taxonomy][$post_type] = $post_type;
+    }
+
 	public function __get($name)
 	{
-		return $this->_taxonomy->{$name};
+        empty($this->_object) and $this->getObject();
+		return $this->_object->{$name};
 	}
 
 }

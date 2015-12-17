@@ -29,7 +29,10 @@ class Editor extends \Morepress\Post\Field {
 			echo apply_filters('the_content', $meta);
 		} else
 		{
-			wp_editor($meta, $this->_id);
+			wp_editor($meta, $id, array(
+                'textarea_name' => $name,
+                'editor_class' => 'morepress_editor',
+            ));
 		}
 
 		if (!empty($this->_description)) {

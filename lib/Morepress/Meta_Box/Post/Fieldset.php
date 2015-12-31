@@ -8,6 +8,7 @@ class Fieldset extends \Morepress\Meta_Box
 
 	protected $_fieldsets = array();
 
+    protected $_condition;
 	public function __construct($id, $title, $screens = null, $context = 'advanced', $priority = 'default') {
 		parent::__construct($id, $title, $screens, $context, $priority);
 		add_action('save_post', array($this, 'saveData'));
@@ -131,6 +132,25 @@ class Fieldset extends \Morepress\Meta_Box
 			}
 			echo '</fieldset>';
 		}
+	}
+
+    public function is_needed() {
+        if(empty($this->_condition)) {
+            return true;
+        }
+        return call_user_func($this->_condition);
+    }
+
+    public function condition($callback) {
+        $this->_condition = $callback;
+    }
+
+	public function add()
+	{
+        if(! $this->is_needed()) {
+            return;
+        }
+		parent::add();
 	}
 
 	public function saveData($post_id) {

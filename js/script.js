@@ -30,10 +30,12 @@ jQuery(function (jQuery) {
         var preview = $(this).parent().parent().find('.upload_preview');
         tb_show('', 'media-upload.php?type=image&TB_iframe=true');
         window.send_to_editor = function (html) {
-            var imgurl = $('img', html).attr('src');
-            var classes = $('img', html).attr('class');
-            var id = classes.replace(/(.*?)wp-image-/, '');
-            formfield.val(id);
+            var regexurl = /<img.*?src="(.*?)"/;
+            var imgurl = regexurl.exec(html)[1];
+            var regexclass = /<img.*?class="(.*?)"/;
+            var imgclass = regexclass.exec(html)[1];
+            var idclass = imgclass.replace(/(.*?)wp-image-/, '');
+            formfield.val(idclass);
             preview.find('img').attr('src', imgurl);
             tb_remove();
             return;

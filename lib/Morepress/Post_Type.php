@@ -151,7 +151,7 @@ class Post_Type
 	public function wpGenerateRewriteRules($wp_rewrite) {
         $rules = array();
 
-        if (!$this->_args['has_archive']) {
+        if (! isset($this->_args['has_archive']) or !$this->_args['has_archive']) {
             return $wp_rewrite;
         }
 

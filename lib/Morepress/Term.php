@@ -65,7 +65,6 @@ class Term {
 
     public function getChildren() {
         $children = array();
-        print_r($this->_taxonomy);
         foreach(get_term_children($this->term_id, $this->taxonomy) as $term_id) {
             $children[] = static::forge($term_id, $this->taxonomy);
         }

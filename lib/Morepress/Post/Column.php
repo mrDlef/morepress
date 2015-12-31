@@ -17,6 +17,7 @@ class Column {
 		is_string($post_types) and $post_types = array($post_types);
 		$this->_post_types = $post_types;
 		add_filter('manage_posts_columns', array($this, 'wpManage'));
+        add_filter('manage_media_columns', array($this, 'wpManage'));
 	}
 
 	public function wpManage($columns)
@@ -37,6 +38,7 @@ class Column {
 	public function content($callback)
 	{
 		add_action('manage_posts_custom_column', $callback, 10, 2);
+		add_action('manage_media_custom_column', $callback, 10, 2);
 	}
 
 	public static function remove($columns, $post_types = array())
@@ -46,6 +48,7 @@ class Column {
 			'post_types' => $post_types,
 		);
 		add_filter('manage_posts_columns', array(__CLASS__, 'wpRemove'), 10, 1);
+		add_filter('manage_media_columns', array(__CLASS__, 'wpRemove'), 10, 1);
 	}
 
 	public static function wpRemove($columns)

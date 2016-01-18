@@ -98,4 +98,8 @@ class User {
         return update_user_meta($this->_user->ID, $key, $value, $prev_value);
 	}
 
+    public function deleteMeta($key, $value = '') {
+        return delete_user_meta($this->_user->ID, $key, $value);
+	}
+
 }

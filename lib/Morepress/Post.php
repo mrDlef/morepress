@@ -106,7 +106,7 @@ class Post {
 
     public function getFirstTerm($taxonomy)
     {
-        empty($this->_terms[$taxonomy]) and $this->_terms[$taxonomy] = get_the_terms(get_the_ID(), $taxonomy);
+        empty($this->_terms[$taxonomy]) and $this->_terms[$taxonomy] = get_the_terms($this->_post->ID, $taxonomy);
         if(! empty($this->_terms[$taxonomy])) {
             return \Morepress\Term::forge($this->_terms[$taxonomy][0]);
         }

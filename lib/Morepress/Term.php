@@ -9,7 +9,7 @@ class Term {
     protected $_taxonomy;
 
     public static function forge($term = null, $taxonomy = null) {
-        if(is_tax($taxonomy)) {
+        if(is_tax($taxonomy) or is_category() or is_tag()) {
             empty($term) and $term = get_queried_object();
         }
         return new static($term, $taxonomy);

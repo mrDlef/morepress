@@ -36,7 +36,6 @@ class PostList extends \Morepress\Post\Field
 		is_array($meta) and $meta = null;
 		$name = is_null($repeatable) ? $this->_name : $this->_name.'['.$repeatable.']';
 		$id = is_null($repeatable) ? $this->_id : $this->_id.'_'.$repeatable;
-		$items = $this->_get_posts();
 		empty($meta) or $post = get_post($meta);
         $classes = array();
         if(! empty($this->_params['context']) and $this->_params['context'] != 'side')

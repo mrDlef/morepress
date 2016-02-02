@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Morepress\\": "src/Morepress/"
+            "Morepress\\": "src/"
         }
     },
     "suggests": {

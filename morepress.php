@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: Morepress
-  Version: 0.7.0
+  Version: 0.8.1
   Plugin URI: https://github.com/daidais/morepress
   Description: Framework to do lots of things programmatically with pleasure
   Author: Denis Favreau
@@ -43,13 +43,13 @@ add_action('admin_enqueue_scripts', function($hook) {
 	wp_register_script('morepress-js', plugins_url('/js/script.js', __FILE__), array('jquery'), null, true);
 	$php_array = array('admin_ajax' => admin_url('admin-ajax.php'));
 	wp_localize_script('morepress-js', 'php_array', $php_array);
-	
+
 	wp_enqueue_script('media-upload');
     	wp_enqueue_script('thickbox');
     	wp_enqueue_style('thickbox');
 	wp_enqueue_script('jquery-ui-autocomplete');
 	wp_enqueue_script('morepress-js');
-	
+
 
 });
 

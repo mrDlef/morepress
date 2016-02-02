@@ -12,12 +12,11 @@
     ],
     "require": {
         "php": ">=5.4",
-        "composer/installers": "~1.0",
-        "wpackagist-plugin/wp-autoloader": "2.0.9"
+        "composer/installers": "^1.0"
     },
     "autoload": {
         "psr-4": {
-            "Morepress\\": "lib/Morepress/"
+            "Morepress\\": "src/Morepress/"
         }
     },
     "suggests": {

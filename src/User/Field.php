@@ -61,6 +61,12 @@ abstract class Field {
 		return $value;
 	}
 
+	protected function _values($user) {
+		$values = get_user_meta($user->ID, $this->_name);
+		empty($values) and $values = (array) $this->_params['default_value'];
+		return $values;
+	}
+
 	protected function _description() {
 		return (empty($this->_params['description']) ? '' : '<p class="description">'.$this->_params['description'].'</p>');
 	}

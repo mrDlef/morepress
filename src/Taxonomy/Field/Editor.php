@@ -20,7 +20,7 @@ class Editor extends \Morepress\Taxonomy\Field
 				</th>
 				<td>
                     <input type="hidden" name="term_meta_editor[]" value="<?php echo $this->_slug; ?>">
-					<?php wp_editor($mp_term->getMeta($this->_slug), $this->_slug, $this->_params['settings']); ?>
+					<?php wp_editor($mp_term->getMeta($this->_slug, true), $this->_slug, $this->_params['settings']); ?>
 					<?php if(! empty($this->_params['description'])) : ?>
 						<p class="description"><?php echo $this->_params['description']; ?></p>
 					<?php endif; ?>

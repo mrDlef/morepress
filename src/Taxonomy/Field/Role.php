@@ -20,7 +20,7 @@ class Role extends \Morepress\Taxonomy\Field
 				</th>
 				<td>
                     <select id="term_meta_<?php echo $this->_slug; ?>" name="term_meta[<?php echo $this->_slug; ?>]"  id="term_meta_<?php echo $this->_slug; ?>">
-                        <?php wp_dropdown_roles($mp_term->getMeta($this->_slug)); ?>
+                        <?php wp_dropdown_roles($mp_term->getMeta($this->_slug, true)); ?>
                     </select>
 					<?php if(! empty($this->_params['description'])) : ?>
 						<p class="description"><?php echo $this->_params['description']; ?></p>

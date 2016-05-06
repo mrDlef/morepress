@@ -7,7 +7,6 @@ class Geolocation extends \Morepress\Post\Field {
     protected $_prefix_id = '';
 
     public function html($meta, $repeatable = null) {
-        is_array($meta);
         $name = is_null($repeatable) ? $this->_name : $this->_name . '[' . $repeatable . ']';
         $id = is_null($repeatable) ? $this->_id : $this->_id . '_' . $repeatable;
         $classes = array();
@@ -19,15 +18,15 @@ class Geolocation extends \Morepress\Post\Field {
         empty($classes) or $classes = ' class="'.$classes.'"';
 		echo '<tr'.$classes.'>';
         echo '
-			<th>
+			<th scope="row">
 				<label for="' . $id . '_lat">' . $this->_label . '</label>
 			</th>
 			<td>
         ';
         is_array($meta['lat']) and $meta['lat'] = null;
         is_array($meta['lng']) and $meta['lng'] = null;
-		echo '<label for="' . $id . '_lat">Latitude</label><input type="text" value="' . $meta['lat'] . '" name="' . $name . '[lat]" id="' . $id . '_lat" '.$this->_inputAttr().'>';
-        echo '<label for="' . $id . '_lng">Longitude</label><input type="text" value="' . $meta['lng'] . '" name="' . $name . '[lng]" id="' . $id . '_lng" '.$this->_inputAttr().'>';
+		echo '<label for="' . $id . '_lat">Latitude</label> <input type="text" value="' . $meta['lat'] . '" name="' . $name . '[lat]" id="' . $id . '_lat" '.$this->_inputAttr().'>';
+        echo '<label for="' . $id . '_lng">Longitude</label> <input type="text" value="' . $meta['lng'] . '" name="' . $name . '[lng]" id="' . $id . '_lng" '.$this->_inputAttr().'>';
         if (!empty($this->_description)) {
             echo '<p class="description">' . $this->_description . '</p>';
         }

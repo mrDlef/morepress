@@ -19,7 +19,7 @@ class Textarea extends \Morepress\Taxonomy\Field
 					<label for="term_meta_<?php echo $this->_slug; ?>"><?php echo $this->_params['label']; ?></label>
 				</th>
 				<td>
-                    <textarea id="term_meta_<?php echo $this->_slug; ?>" name="term_meta[<?php echo $this->_slug; ?>]"><?php echo esc_attr($mp_term->getMeta($this->_slug)); ?></textarea>
+                    <textarea id="term_meta_<?php echo $this->_slug; ?>" name="term_meta[<?php echo $this->_slug; ?>]"><?php echo esc_attr($mp_term->getMeta($this->_slug, true)); ?></textarea>
 					<?php if(! empty($this->_params['description'])) : ?>
 						<p class="description"><?php echo $this->_params['description']; ?></p>
 					<?php endif; ?>

@@ -12,8 +12,7 @@ class Image extends \Morepress\Post\Field
 		$id = is_null($repeatable) ? $this->_id : $this->_id.'_'.$repeatable;
 		$image = null;
 		if ($meta) {
-			$image = wp_get_attachment_image_src($meta, 'original');
-			$image = $image[0];
+			$image = get_post($meta);
 		}
         $classes = array();
         if(! empty($this->_params['context']) and $this->_params['context'] != 'side')
@@ -24,12 +23,12 @@ class Image extends \Morepress\Post\Field
         empty($classes) or $classes = ' class="'.$classes.'"';
 		echo '<tr'.$classes.'>';
 		echo '
-			<th>
+			<th scope="row">
 				<label for="'.$id . '">'.$this->_label.'</label>
 			</th>
 			<td>
 				<input name="'.$name.'" type="hidden" class="upload_image" value="'.$meta.'">
-                <div class="upload_preview"><img src="'.$image.'" class="preview_image" height="150" alt=""></div>
+                <div class="upload_preview"><img src="'.($image ? $image->guid : '').'" class="preview_image" height="150" alt=""></div>
 				<p>
 					<input class="upload_image_button button" type="button" value="Choisir une image">
 					<a href="#" class="clear_image_button button">Supprimer l\'image</a>

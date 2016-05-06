@@ -1,5 +1,6 @@
 jQuery(function (jQuery) {
-    var $ = jQuery;
+    var $ = jQuery
+      , mp_media;
 
     function initAutocomplete(element)
     {
@@ -26,33 +27,40 @@ jQuery(function (jQuery) {
     }
 
     $(document).on('click', '.upload_image_button', function (e) {
-        var formfield = $(this).parent().parent().find('.upload_image');
-        var preview = $(this).parent().parent().find('.upload_preview');
-        tb_show('', 'media-upload.php?type=image&TB_iframe=true');
-        window.send_to_editor = function (html) {
-            var regexurl = /<img.*?src="(.*?)"/;
-            var imgurl = regexurl.exec(html)[1];
-            var regexclass = /<img.*?class="(.*?)"/;
-            var imgclass = regexclass.exec(html)[1];
-            var idclass = imgclass.replace(/(.*?)wp-image-/, '');
-            formfield.val(idclass);
-            preview.find('img').attr('src', imgurl);
-            tb_remove();
-            return;
-        };
+        if(! mp_media) {
+            mp_media = wp.media({
+                className: 'media-frame',
+                multiple: false
+            });
+        }
+        var $input = $(this).parent().parent().find('.upload_image')
+          , $preview = $(this).parents('.form-field').parent().find('.upload_preview');
+        mp_media.open();
+        mp_media.off('select');
+        mp_media.on('select', function () {
+            var selection = mp_media.state().get('selection').first().toJSON();
+            $input.attr('value', selection.id);
+            $preview.find('img').attr('src', selection.url);
+        });
         return e.preventDefault();
     });
+
     $(document).on('click', '.upload_button', function (e) {
-        var formfield = $(this).parent().parent().find('.upload');
-        var preview = $(this).parent().parent().find('.upload_preview');
-        tb_show('', 'media-upload.php?TB_iframe=true');
-        window.send_to_editor = function (html) {
-            var href = $(html).attr('href');
-            formfield.val(href);
-            preview.find('a').attr('href', href).text(href);
-            tb_remove();
-            return;
-        };
+        if(! mp_media) {
+            mp_media = wp.media({
+                className: 'media-frame',
+                multiple: false
+            });
+        }
+        var $input = $(this).parent().parent().find('.upload')
+          , $preview = $(this).parent().parent().find('.upload_preview');
+        mp_media.open();
+        mp_media.off('select');
+        mp_media.on('select', function () {
+            var selection = mp_media.state().get('selection').first().toJSON();
+            $input.attr('value', selection.id);
+            $preview.find('a').attr('href', selection.url).text(selection.title);
+        });
         return e.preventDefault();
     });
 
@@ -94,7 +102,7 @@ jQuery(function (jQuery) {
     });
 
     $(document).on('click', '.group-repeatable-remove', function (e) {
-        $(this).parent().parent().remove();
+        $(this).parent().remove();
         return e.preventDefault();
     });
 

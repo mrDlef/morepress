@@ -9,8 +9,7 @@ class Post_Type
 	protected $_post_type;
 	protected $_args;
 	protected $_actions;
-	protected $_add_support = array();
-	protected $_remove_support = array();
+    protected $_condition;
 
 	public static function forge($post_type, $args = array())
 	{
@@ -44,6 +43,17 @@ class Post_Type
             add_action('generate_rewrite_rules', array($this, 'wpGenerateRewriteRules'));
 		}
 	}
+
+    public function do_condition() {
+        if(empty($this->_condition)) {
+            return true;
+        }
+        return call_user_func($this->_condition);
+    }
+
+    public function condition($callback) {
+        $this->_condition = $callback;
+    }
 
 	protected function _setDefaultArgs($args = array())
 	{
@@ -109,18 +119,19 @@ class Post_Type
 		foreach($support as &$item)
 		{
 			is_object($item) and $item = $item->getName();
+            add_post_type_support($this->_post_type, $item);
 		}
-		$this->_add_support = array_merge($this->_add_support, $support);
-
-		add_action('init', array($this, 'wpAddSupport'));
 	}
 
 	public function removeSupport($support)
 	{
 		is_object($support) and $support = $support->getName();
 		is_string($support) and $support = array($support);
-		$this->_remove_support = array_merge($this->_remove_support, $support);
-		add_action('init', array($this, 'wpRemoveSupport'));
+		foreach($support as &$item)
+		{
+			is_object($item) and $item = $item->getName();
+            remove_post_type_support($this->_post_type, $item);
+		}
 	}
 
 	public function hasSupport($support)
@@ -191,18 +202,6 @@ class Post_Type
         $wp_rewrite->rules = $rules + $wp_rewrite->rules;
         return $wp_rewrite;
     }
-	public function wpAddSupport()
-	{
-		add_post_type_support($this->_post_type, $this->_add_support);
-	}
-
-	public function wpRemoveSupport()
-	{
-		foreach($this->_remove_support as $support)
-		{
-			remove_post_type_support($this->_post_type, $support);
-		}
-	}
 
 	public function addAction($name, $callback) {
 		$this->_action = array(

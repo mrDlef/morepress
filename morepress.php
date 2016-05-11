@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: Morepress
-  Version: 0.8.2
+  Version: 0.9.0
   Plugin URI: https://github.com/daidais/morepress
   Description: Framework to do lots of things programmatically with pleasure
   Author: Denis Favreau

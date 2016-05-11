@@ -5,7 +5,6 @@ namespace Morepress;
 class Term {
 
     protected $_term;
-    protected $_meta;
     protected $_taxonomy;
 
     public static function forge($term = null, $taxonomy = null) {
@@ -43,16 +42,43 @@ class Term {
         }
         return $terms;
     }
-    public function getMeta($key = null) {
-        empty($this->_meta) and $this->_meta = stripslashes_deep(get_option('taxonomy_term_' . $this->_term->term_id));
 
-        if (empty($key)) {
-            return $this->_meta;
+	public function addMeta($meta_key, $meta_value, $unique = false)
+	{
+		return add_term_meta($this->_term->term_id, $meta_key, $meta_value, $unique);
+	}
+
+	public function updateMeta($meta_key, $meta_value, $prev_value = '')
+	{
+		return update_term_meta($this->_term->term_id, $meta_key, $meta_value, $prev_value);
+	}
+
+	public function meta($key = '', $single = false)
+	{
+        echo $this->getMeta($key, $single);
+	}
+
+    public function getMeta($key = null, $single = false) {
+        $value = null;
+        if(function_exists('get_term_meta')) {
+            $value = get_term_meta($this->_term->term_id, $key, $single);
         }
-        if (isset($this->_meta[$key])) {
-            return $this->_meta[$key];
+        if(empty($value)) {
+            empty($this->_meta) and $this->_meta = stripslashes_deep(get_option('taxonomy_term_' . $this->_term->term_id));
+
+            if (empty($key)) {
+                $value = $this->_meta;
+            }
+            if (isset($this->_meta[$key])) {
+                $value = $this->_meta[$key];
+            }
         }
+        return $value;
     }
+
+	public function deleteMeta($meta_key, $meta_value = '') {
+		return delete_term_meta($this->_term->term_id, $meta_key, $meta_value);
+	}
 
     public function getTaxonomy() {
         empty($this->_taxonomy) and $this->_taxonomy = \Morepress\Taxonomy::forge($this->_term->taxonomy);

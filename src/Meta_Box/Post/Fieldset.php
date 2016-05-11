@@ -20,12 +20,9 @@ class Fieldset extends \Morepress\Meta_Box
 		if (class_exists($class_name))
 		{
 			$this->_fields[$slug] = new $class_name($slug, $desc, $params);
-			return true;
+			return $this;
 		}
-        else {
-            throw new \Exception('Field type doesn\'t exists');
-        }
-		return false;
+        throw new \Exception('Field type doesn\'t exists');
 	}
 
 	public function addFieldset($name, $legend, $repeatable = false) {
@@ -78,14 +75,15 @@ class Fieldset extends \Morepress\Meta_Box
 	{
 		if($fieldset->isRepeatable())
 		{
-			echo '<script type="text/template" id="tpl-fieldset-'.$fieldset->getName().'">';
-			echo '<fieldset>';
-			echo '<p><strong>'.$fieldset->getLegend().'</strong> <a class="group-repeatable-remove button button-small right" href="#">Supprimer</a></legend>';
-			echo '<hr>';
-			$this->render($fieldset->getFields(), null, '__INDEX__');
-			echo '<hr>';
-			echo '</fieldset>';
-			echo '</script>';
+            echo '<h4>'.$fieldset->getLegend().'</h4>';
+            echo '<script type="text/template" id="tpl-fieldset-'.$fieldset->getName().'">';
+            echo '<fieldset>';
+            echo '<hr>';
+            echo '<a class="group-repeatable-remove button button-small right" href="#">Supprimer</a>';
+            $this->render($fieldset->getFields(), null, '__INDEX__');
+            echo '</fieldset>';
+            echo '</script>';
+
 			if($post)
 			{
 				$i = 0;
@@ -100,12 +98,11 @@ class Fieldset extends \Morepress\Meta_Box
 
 				foreach($meta as $key=>$row)
 				{
-					echo '<fieldset>';
-					echo '<p><strong>'.$fieldset->getLegend().'</strong> <a class="group-repeatable-remove button button-small right" href="#">Supprimer</a></legend>';
-					echo '<hr>';
-					$this->render($fieldset->getFields(), $post, $i);
-					echo '<hr>';
-					echo '</fieldset><br>';
+                    echo '<fieldset>';
+                    echo '<hr>';
+                    echo '<a class="group-repeatable-remove button button-small right" href="#">Supprimer</a>';
+                    $this->render($fieldset->getFields(), $post, $i);
+                    echo '</fieldset>';
 					$i++;
 				}
 			}

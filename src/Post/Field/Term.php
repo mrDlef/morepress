@@ -17,7 +17,7 @@ class Term extends \Morepress\Post\Field
         );
         empty($this->_params['args']) or $args = array_merge($args, $this->_params['args']);
 		echo '<tr>';
-		echo '<th><label for="' . $this->_id . '">' . $this->_params['label'] . '</label></th>';
+		echo '<th scope="row"><label for="' . $this->_id . '">' . $this->_params['label'] . '</label></th>';
 		echo '
 			<td>
                 '.  wp_dropdown_categories($args).'
@@ -48,7 +48,7 @@ class Term extends \Morepress\Post\Field
         empty($this->_params['args']) or $args = array_merge($args, $this->_params['args']);
 		echo '<tr'.$classes.'>';
 		echo '
-			<th>
+			<th scope="row">
 				<label for="'.$id . '">'.$this->_label.'</label>
 			</th>
 

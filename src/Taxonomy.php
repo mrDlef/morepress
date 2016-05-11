@@ -216,7 +216,14 @@ class Taxonomy
 			}
             empty($this->_events['before_save']) or $this->_events['before_save']($term_id, $term_meta);
 			//save the option array
-			update_option('taxonomy_term_'.$term_id, $term_meta);
+            if(function_exists(('update_term_meta'))) {
+                foreach($term_meta as $key=>$value) {
+                    update_term_meta($term_id, $key, $value);
+                }
+            }
+            else {
+                update_option('taxonomy_term_'.$term_id, $term_meta);
+            }
 		}
         empty($this->_events['after_save']) or $this->_events['after_save']($term_id, $term_meta);
 	}

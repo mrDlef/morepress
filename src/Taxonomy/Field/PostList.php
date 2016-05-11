@@ -20,7 +20,7 @@ class PostList extends \Morepress\Taxonomy\Field
 	{
         if (! empty($term)) {
             $mp_term = \Morepress\Term::forge($term);
-            $meta = $mp_term->getMeta('page');
+            $meta = $mp_term->getMeta('page', true);
             empty($meta) or $post = get_post($meta);
         ?>
 			<tr class="form-field">

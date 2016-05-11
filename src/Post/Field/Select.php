@@ -20,7 +20,7 @@ class Select extends \Morepress\Post\Field
         empty($classes) or $classes = ' class="'.$classes.'"';
 		echo '<tr'.$classes.'>';
 		echo '
-			<th>
+			<th scope="row">
 				<label for="'.$id . '">'.$this->_label.'</label>
 			</th>
 			<td>

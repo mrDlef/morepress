@@ -21,7 +21,7 @@ class Checkbox extends \Morepress\Taxonomy\Field
 				<td>
                     <label for="term_meta_<?php echo $this->_slug; ?>">
                         <input name="term_meta[<?php echo $this->_slug; ?>]" type="hidden" value="0">
-                        <input <?php echo $mp_term->getMeta($this->_slug) ? ' checked' : ''; ?> id="term_meta_<?php echo $this->_slug; ?>" name="term_meta[<?php echo $this->_slug; ?>]" type="checkbox" value="1">
+                        <input <?php echo $mp_term->getMeta($this->_slug, true) ? ' checked' : ''; ?> id="term_meta_<?php echo $this->_slug; ?>" name="term_meta[<?php echo $this->_slug; ?>]" type="checkbox" value="1">
                         <?php if(! empty($this->_params['description'])) : ?>
                             <?php echo $this->_params['description']; ?>
                         <?php endif; ?>

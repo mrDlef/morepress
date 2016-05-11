@@ -2,7 +2,7 @@
 
 namespace Morepress\Post\Field;
 
-class Image extends \Morepress\Post\Field
+class Tel extends \Morepress\Post\Field
 {
 
 	protected $_prefix_id = '';
@@ -10,10 +10,6 @@ class Image extends \Morepress\Post\Field
 		is_array($meta) and $meta = null;
 		$name = is_null($repeatable) ? $this->_name : $this->_name.'['.$repeatable.']';
 		$id = is_null($repeatable) ? $this->_id : $this->_id.'_'.$repeatable;
-		$image = null;
-		if ($meta) {
-			$image = get_post($meta);
-		}
         $classes = array();
         if(! empty($this->_params['context']) and $this->_params['context'] != 'side')
         {
@@ -27,13 +23,7 @@ class Image extends \Morepress\Post\Field
 				<label for="'.$id . '">'.$this->_label.'</label>
 			</th>
 			<td>
-				<input name="'.$name.'" type="hidden" class="upload_image" value="'.$meta.'">
-                <div class="upload_preview"><img src="'.($image ? $image->guid : '').'" class="preview_image" height="150" alt=""></div>
-				<p>
-					<input class="upload_image_button button" type="button" value="Choisir une image">
-					<a href="#" class="clear_image_button button">Supprimer l\'image</a>
-				</p>
-			';
+				<input type="tel" value="'.$meta.'" name="'.$name.'" id="'.$id . '" '.$this->_inputAttr().'>';
 		if(!empty($this->_description))
 		{
 			echo '<p class="description">' . $this->_description . '</p>';

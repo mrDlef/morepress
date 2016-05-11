@@ -18,14 +18,22 @@ class Fieldset {
 	public function addField($type, $slug, $desc = null, $params = array()) {
 		$class_name = 'Morepress\\Post\\Field\\' . ucfirst($type);
 		if (class_exists($class_name)) {
-			$params = array_merge($params, array(
-				'grouped_repeatable' => $this->_repeatable,
-			));
+            if(is_array($desc)) {
+                $desc = array_merge($desc, array(
+                    'grouped_repeatable' => $this->_repeatable,
+                ));
+            }
+            else {
+                $params = array_merge($params, array(
+                    'grouped_repeatable' => $this->_repeatable,
+                ));
+            }
+
 
 			$this->_fields[] = new $class_name($slug, $desc, $params);
-			return true;
+			return $this;
 		}
-		return false;
+		throw new \Exception('Field type doesn\'t exists');
 	}
 
 	public function isRepeatable() {
@@ -38,6 +46,10 @@ class Fieldset {
 
 	public function getFields() {
 		return $this->_fields;
+	}
+
+	public function nbFields() {
+		return count($this->_fields);
 	}
 
 	public function getName() {

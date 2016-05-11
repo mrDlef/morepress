@@ -20,11 +20,15 @@ class Url extends \Morepress\Post\Field
         empty($classes) or $classes = ' class="'.$classes.'"';
 		echo '<tr'.$classes.'>';
 		echo '
-			<th>
+			<th scope="row">
 				<label for="'.$id . '">'.$this->_label.'</label>
 			</th>
 			<td>
-				<input type="url" value="'.$meta.'" name="'.$name.'" id="'.$id . '" '.$this->_inputAttr().'>';
+                <div class="alignleft actions">
+                    <input type="url" value="'.$meta.'" name="'.$name.'" id="'.$id . '" '.$this->_inputAttr().'>
+                </div>
+
+            ';
 		if(!empty($this->_description))
 		{
 			echo '<p class="description">' . $this->_description . '</p>';

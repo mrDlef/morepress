@@ -17,28 +17,52 @@ class Editor extends \Morepress\Post\Field {
         }
         $classes = implode(' ', $classes);
         empty($classes) or $classes = ' class="'.$classes.'"';
-		echo '<tr'.$classes.'>';
-		echo '
-			<th>
-				<label for="' . $id . '">' . $this->_label . '</label>
-			</th>
-			<td>
-        ';
-		if (!empty($this->_params['disabled']))
-		{
-			echo apply_filters('the_content', $meta);
-		} else
-		{
-			wp_editor($meta, $id, array(
-                'textarea_name' => $name,
-                'editor_class' => 'morepress_editor',
-            ));
-		}
 
-		if (!empty($this->_description)) {
-			echo '<p class="description">' . $this->_description . '</p>';
-		}
-		echo '</td>';
+		echo '<tr'.$classes.'>';
+        if(false === $this->_label) {
+            echo '
+                <td colspan="2">
+            ';
+            if (!empty($this->_params['disabled']))
+            {
+                echo apply_filters('the_content', $meta);
+            } else
+            {
+                wp_editor($meta, $id, array(
+                    'textarea_name' => $name,
+                    'editor_class' => 'morepress_editor',
+                ));
+            }
+
+            if (!empty($this->_description)) {
+                echo '<p class="description">' . $this->_description . '</p>';
+            }
+            echo '</td>';
+        }
+        else {
+            echo '
+                <th scope="row">
+                    <label for="' . $id . '">' . $this->_label . '</label>
+                </th>
+                <td>
+            ';
+            if (!empty($this->_params['disabled']))
+            {
+                echo apply_filters('the_content', $meta);
+            } else
+            {
+                wp_editor($meta, $id, array(
+                    'textarea_name' => $name,
+                    'editor_class' => 'morepress_editor',
+                ));
+            }
+
+            if (!empty($this->_description)) {
+                echo '<p class="description">' . $this->_description . '</p>';
+            }
+            echo '</td>';
+        }
+
 		echo '</tr>';
 	}
 

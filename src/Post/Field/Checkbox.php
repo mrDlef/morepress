@@ -19,11 +19,10 @@ class Checkbox extends \Morepress\Post\Field
         empty($classes) or $classes = ' class="'.$classes.'"';
 		echo '<tr'.$classes.'>';
 		echo '
-			<th></th>
-			<td>
+			<td colspan="2">
 				<label for="'.$id . '">
 					<input type="hidden" value="0" name="'.$name.'">
-					<input type="checkbox" value="1" name="'.$name.'" id="'.$id . '" '. ($meta ? ' checked="checked"' : '') .' '.$this->_inputAttr().'>
+					<input type="checkbox" value="1" name="'.$name.'" id="'.$id . '" '. ($meta ? ' checked' : '') .' '.$this->_inputAttr().'>
 					'.$this->_label.'
 				</label>';
 		if(!empty($this->_description))

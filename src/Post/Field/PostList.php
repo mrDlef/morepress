@@ -46,11 +46,11 @@ class PostList extends \Morepress\Post\Field
         empty($classes) or $classes = ' class="'.$classes.'"';
 		echo '<tr'.$classes.'>';
 		echo '
-			<th>
+			<th scope="row">
 				<label for="'.$id . '">'.$this->_label.'</label>
 			</th>
 			<td>
-				<input data-callback="'.$this->_id.'" type="text" class="morepress_post_list" value="'.(isset($post->post_title) ? $post->post_title : '').'" id="'.$id . '" placeholder="Commencez à tapper..." '.$this->_inputAttr().'>
+				<input data-callback="'.$this->_id.'" type="text" class="morepress_post_list large-text" value="'.(isset($post->post_title) ? $post->post_title : '').'" id="'.$id . '" placeholder="Commencez à tapper..." '.$this->_inputAttr().'>
 				<input type="hidden" value="'.(isset($post->ID) ? $post->ID : '').'" name="'.$name.'">
 		';
 		if(!empty($this->_description))

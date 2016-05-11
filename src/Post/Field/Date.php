@@ -13,17 +13,18 @@ class Date extends \Morepress\Post\Field {
         $id = is_null($repeatable) ? $this->_id : $this->_id . '_' . $repeatable;
         echo '<tr>';
         echo '
-			<th>
-				<label for="' . $id . '_lat">' . $this->_label . '</label>
+			<th scope="row">
+				<label for="' . $id . '_jj">' . $this->_label . '</label>
 			</th>
 			<td>
         ';
-        $time_adj = current_time('timestamp');
-        $jj = ($meta) ? mysql2date('d', $meta, false) : gmdate('d', $time_adj);
-        $mm = ($meta) ? mysql2date('m', $meta, false) : gmdate('m', $time_adj);
-        $aa = ($meta) ? mysql2date('Y', $meta, false) : gmdate('Y', $time_adj);
+        $jj = ($meta) ? mysql2date('d', $meta, false) : '';
+        $mm = ($meta) ? mysql2date('m', $meta, false) : '';
+        $aa = ($meta) ? mysql2date('Y', $meta, false) : '';
 
-        $month = '<label><span class="screen-reader-text">' . __('Month') . '</span><select id="' . $id . '_mm" name="' . $name . '[mm]"' . " '.$this->_inputAttr().'>\n";
+        $month = '<label><span class="screen-reader-text">' . __('Month') . '</span><select id="' . $id . '_mm" name="' . $name . '[mm]"' . ' '.$this->_inputAttr().'>';
+        $month .= "\t\t\t" . '<option value="" data-text="" ' . selected('', $mm, false) . '>';
+        $month .= "--</option>\n";
         for ($i = 1; $i < 13; $i = $i + 1) {
             $monthnum = zeroise($i, 2);
             $monthtext = $wp_locale->get_month_abbrev($wp_locale->get_month($i));
@@ -32,8 +33,8 @@ class Date extends \Morepress\Post\Field {
         }
         $month .= '</select></label>';
 
-        $day = '<label><span class="screen-reader-text">' . __('Day') . '</span><input type="text" id="' . $id . '_jj" name="' . $name . '[jj]" value="' . $jj . '" size="2" maxlength="2"' . ' autocomplete="off" ' . $this->_inputAttr() . '></label>';
-        $year = '<label><span class="screen-reader-text">' . __('Year') . '</span><input type="text" id="' . $id . '_aa" name="' . $name . '[aa]" value="' . $aa . '" size="4" maxlength="4"' . ' autocomplete="off" ' . $this->_inputAttr() . '></label>';
+        $day = '<label><span class="screen-reader-text">' . __('Day') . '</span><input type="number" min="1" max="31" id="' . $id . '_jj" name="' . $name . '[jj]" value="' . $jj . '" size="2" maxlength="2"' . ' autocomplete="off" ' . $this->_inputAttr() . '></label>';
+        $year = '<label><span class="screen-reader-text">' . __('Year') . '</span><input type="number" id="' . $id . '_aa" name="' . $name . '[aa]" value="' . $aa . '" size="4" maxlength="4"' . ' autocomplete="off" ' . $this->_inputAttr() . '></label>';
 
         echo $day . $month . $year;
 
@@ -45,7 +46,13 @@ class Date extends \Morepress\Post\Field {
     }
 
 	public function pre_save($post_id, $new, $old) {
-        $new = implode('-', array($new['aa'], $new['mm'], $new['dd']));
+        empty($new['aa']) and $new['aa'] = date('Y');
+        empty($new['mm']) and $new['mm'] = date('m');
+        empty($new['jj']) and $new['jj'] = date('d');
+        $new['aa'] = sprintf('%04d', $new['aa']);
+        $new['mm'] = sprintf('%02d', $new['mm']);
+        $new['jj'] = sprintf('%02d', $new['jj']);
+        $new = implode('-', array($new['aa'], $new['mm'], $new['jj']));
 		return parent::pre_save($post_id, $new, $old);
 	}
 

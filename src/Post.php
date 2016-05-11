@@ -43,17 +43,32 @@ class Post {
 	{
         echo $this->getMeta($key, $single);
 	}
+
 	public function getMeta($key = '', $single = false)
 	{
         if(is_bool($key)) {
             $all_meta = array();
-            $meta = $this->getMeta();
-            foreach($meta as $k=>$v) {
-                $all_meta[$k] = $this->getMeta($k, $key);
+            if($key) {
+                $meta = $this->getMeta();
+                foreach($meta as $k=>$v) {
+                    $all_meta[$k] = $this->getMeta($k, $key);
+                }
+            }
+            else {
+                $all_meta = $this->getMeta();
             }
             return $all_meta;
         }
 		return get_post_meta($this->_post->ID, $key, $single);
+	}
+
+	public function getFileURL($key = '')
+	{
+        $url = $this->getMeta($key, true);
+
+        is_numeric($url) and $url = Post::forge($url)->guid;
+
+		return $url;
 	}
 
 	public function getPermalink($leavename = false)
@@ -111,6 +126,18 @@ class Post {
             return \Morepress\Term::forge($this->_terms[$taxonomy][0]);
         }
     }
+
+    public function getTerms($taxonomy, $args = array())
+    {
+        return wp_get_post_terms($this->_post->ID, $taxonomy, $args);
+    }
+
+    public function getChildren($args = array(), $output = OBJECT)
+    {
+        $args['post_parent'] = $this->_post->ID;
+        return get_children($args, $output);
+    }
+
 
     public function delete($force_delete = false)
     {

@@ -4,11 +4,16 @@ namespace Morepress\Customize\Control;
 
 class Term extends \WP_Customize_Control {
 
+	/**
+	 * @access public
+	 * @var string
+	 */
+	public $taxonomy = 'category';
+
     protected function render_content() {
-        empty($this->tax_name) and $this->tax_name = 'category';
         $dropdown = wp_dropdown_categories(
             array(
-                'tax_name' => $this->tax_name,
+                'taxonomy' => $this->taxonomy,
                 'name' => '_customize-dropdown-terms-' . $this->id,
                 'echo' => 0,
                 'show_option_none' => __('&mdash; Select &mdash;'),

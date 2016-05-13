@@ -26,56 +26,6 @@ jQuery(function (jQuery) {
         };
     }
 
-    $(document).on('click', '.upload_image_button', function (e) {
-        if(! mp_media) {
-            mp_media = wp.media({
-                className: 'media-frame',
-                multiple: false
-            });
-        }
-        var $input = $(this).parent().parent().find('.upload_image')
-          , $preview = $(this).parents('.form-field').parent().find('.upload_preview');
-        mp_media.open();
-        mp_media.off('select');
-        mp_media.on('select', function () {
-            var selection = mp_media.state().get('selection').first().toJSON();
-            $input.attr('value', selection.id);
-            $preview.find('img').attr('src', selection.url);
-        });
-        return e.preventDefault();
-    });
-
-    $(document).on('click', '.upload_button', function (e) {
-        if(! mp_media) {
-            mp_media = wp.media({
-                className: 'media-frame',
-                multiple: false
-            });
-        }
-        var $input = $(this).parent().parent().find('.upload')
-          , $preview = $(this).parent().parent().find('.upload_preview');
-        mp_media.open();
-        mp_media.off('select');
-        mp_media.on('select', function () {
-            var selection = mp_media.state().get('selection').first().toJSON();
-            $input.attr('value', selection.id);
-            $preview.find('a').attr('href', selection.url).text(selection.title);
-        });
-        return e.preventDefault();
-    });
-
-    $(document).on('click', '.clear_image_button', function (e) {
-        var defaultImage = $(this).parent().parent().find('.default_image').text();
-        $(this).parent().parent().find('.upload_image').val('');
-        $(this).parent().parent().find('.preview_image').attr('src', defaultImage);
-        return e.preventDefault();
-    });
-    $(document).on('click', '.clear_button', function (e) {
-        $(this).parent().parent().find('.upload').val('');
-        $(this).parent().parent().find('.upload_preview a').attr('href', '#').text('');
-        return e.preventDefault();
-    });
-
     // Reapeatable fields
     $(document).on('click', '.repeatable-add', function (e) {
 

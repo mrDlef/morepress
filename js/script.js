@@ -1,6 +1,5 @@
 jQuery(function (jQuery) {
-    var $ = jQuery
-      , mp_media;
+    var $ = jQuery;
 
     function initAutocomplete(element)
     {
@@ -45,6 +44,7 @@ jQuery(function (jQuery) {
         var $newFieldset = $($(this).attr('href')).html();
         $newFieldset = $newFieldset.replace(/__INDEX__/g, $(this).parent().parent().find('fieldset').size());
         $(this).parent().before($newFieldset);
+        $(document).trigger('mp-group-repeatable:add');
         $('.morepress_post_list').each(function () {
             initAutocomplete(this);
         });
@@ -53,6 +53,7 @@ jQuery(function (jQuery) {
 
     $(document).on('click', '.group-repeatable-remove', function (e) {
         $(this).parent().remove();
+        $(document).trigger( "mp-group-repeatable:remove");
         return e.preventDefault();
     });
 

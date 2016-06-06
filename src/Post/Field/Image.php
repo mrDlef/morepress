@@ -32,28 +32,46 @@ class Image extends \Morepress\Post\Field
         if(! empty($this->_params['context']) and $this->_params['context'] != 'side')
         {
             $classes[] = 'form-field';
-            $classes[] = 'form-field-image';
         }
+        $classes[] = 'form-field-image';
         $classes = implode(' ', $classes);
         empty($classes) or $classes = ' class="'.$classes.'"';
 		echo '<tr'.$classes.'>';
-		echo '
-			<th scope="row">
-				<label for="'.$id . '">'.$this->_label.'</label>
-			</th>
-			<td>
-				<input name="'.$name.'" type="hidden" class="upload_image" value="'.$meta.'">
-                <div class="upload_preview"><img src="'.($image ? $image->guid : '').'" class="preview_image" height="150" alt=""></div>
-                <p class="hide-if-no-js">
-                    <button class="upload_image_button button'.($meta ? ' hidden' : '').'" type="button">Choisir un image</button>
-                    <button class="clear_image_button button'.($meta ? '' : ' hidden').'" type="button">Supprimer l\'image</button>
-                </p>
-			';
-		if(!empty($this->_description))
-		{
-			echo '<p class="description">' . $this->_description . '</p>';
-		}
-		echo '</td>';
-		echo '</tr>';
+        if(false === $this->_label) {
+            echo '
+                <td scope="row">
+                    <input name="'.$name.'" type="hidden" class="upload_image" value="'.$meta.'">
+                    <div class="upload_preview"><img src="'.($image ? $image->guid : '').'" class="preview_image" height="150" alt=""></div>
+                    <p class="hide-if-no-js">
+                        <button class="upload_image_button button'.($meta ? ' hidden' : '').'" type="button">Choisir un image</button>
+                        <button class="clear_image_button button'.($meta ? '' : ' hidden').'" type="button">Supprimer l\'image</button>
+                    </p>
+                ';
+            if(!empty($this->_description))
+            {
+                echo '<p class="description">' . $this->_description . '</p>';
+            }
+            echo '</td>';
+        }
+        else {
+            echo '
+                <th scope="row">
+                    <label for="'.$id . '">'.$this->_label.'</label>
+                </th>
+                <td>
+                    <input name="'.$name.'" type="hidden" class="upload_image" value="'.$meta.'">
+                    <div class="upload_preview"><img src="'.($image ? $image->guid : '').'" class="preview_image" height="150" alt=""></div>
+                    <p class="hide-if-no-js">
+                        <button class="upload_image_button button'.($meta ? ' hidden' : '').'" type="button">Choisir un image</button>
+                        <button class="clear_image_button button'.($meta ? '' : ' hidden').'" type="button">Supprimer l\'image</button>
+                    </p>
+                ';
+            if(!empty($this->_description))
+            {
+                echo '<p class="description">' . $this->_description . '</p>';
+            }
+            echo '</td>';
+        }
+        echo '</tr>';
 	}
 }

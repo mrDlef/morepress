@@ -32,8 +32,8 @@ class File extends \Morepress\Post\Field
         if(! empty($this->_params['context']) and $this->_params['context'] != 'side')
         {
             $classes[] = 'form-field';
-            $classes[] = 'form-field-file';
         }
+        $classes[] = 'form-field-file';
         $classes = implode(' ', $classes);
         empty($classes) or $classes = ' class="'.$classes.'"';
 		echo '<tr'.$classes.'>';

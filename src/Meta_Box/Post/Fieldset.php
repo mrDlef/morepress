@@ -30,6 +30,12 @@ class Fieldset extends \Morepress\Meta_Box
 		return $this->_fieldsets[$name];
 	}
 
+	public function getFieldset($name) {
+		if(isset($this->_fieldsets[$name])) {
+            return $this->_fieldsets[$name];
+        }
+	}
+
 	public function render($fields, $post = null, $index = null)
 	{
 		if (!empty($fields)) {

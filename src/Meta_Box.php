@@ -48,13 +48,4 @@ abstract class Meta_Box
 		}
 	}
 
-	public static function remove($page)
-	{
-		if (($key = array_search($page, $this->_screens)) !== false)
-		{
-			unset($this->_screens[$key]);
-		}
-		remove_meta_box($this->_id, $page, $this->_context);
-	}
-
 }

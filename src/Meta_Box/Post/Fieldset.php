@@ -174,6 +174,7 @@ class Fieldset extends \Morepress\Meta_Box
 			return $post_id;
 		}
 		$this->_beforeSave($post_id);
+        do_action('morepress_fieldset_'.$this->_id.'_before_save', $post_id);
 		foreach ($this->_fields as $field) {
 			$field->save($post_id);
 		}
@@ -183,6 +184,7 @@ class Fieldset extends \Morepress\Meta_Box
 			}
 		}
 		$this->_afterSave($post_id);
+        do_action('morepress_fieldset_'.$this->_id.'_after_save', $post_id);
 		return $post_id;
 	}
 

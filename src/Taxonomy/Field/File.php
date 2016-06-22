@@ -29,6 +29,10 @@ class File extends Field {
         if (! empty($term)) {
             $mp_term = \Morepress\Term::forge($term);
 			$value = $mp_term->getMeta($this->_slug, true);
+            $file = $value;
+			if (is_numeric($file)) {
+				$file = wp_get_attachment_url($file);
+			}
 			?>
 			<tr class="form-field form-field-file">
 				<th scope="row" valign="top">
@@ -37,8 +41,8 @@ class File extends Field {
 				<td>
 					<input id="term_meta_<?php echo $this->_slug; ?>" name="term_meta[<?php echo $this->_slug; ?>]" type="hidden" class="upload" value="<?php echo $value ? esc_attr($value) : ''; ?>">
                     <div class="upload_preview">
-                        <a href="<?php echo esc_attr($value); ?>" target="_blank">
-                            <?php echo $value; ?>
+                        <a href="<?php echo esc_attr($file); ?>" target="_blank">
+                            <?php echo $file; ?>
                         </a>
                     </div>
 					<p class="hide-if-no-js">

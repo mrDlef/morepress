@@ -18,12 +18,18 @@ class Textarea extends \Morepress\Post\Field
         $classes = implode(' ', $classes);
         empty($classes) or $classes = ' class="'.$classes.'"';
 		echo '<tr'.$classes.'>';
-		echo '
-			<th scope="row">
-				<label for="'.$id . '">'.$this->_label.'</label>
-			</th>
-			<td>
-				<textarea value="" name="'.$name.'" id="'.$id . '" rows="5" '.$this->_inputAttr().'>'.$meta.'</textarea>';
+		if(false === $this->_label) {
+			echo '<td colspan="2">';
+		}
+		else {
+			echo '
+				<th scope="row">
+					<label for="'.$id . '">'.$this->_label.'</label>
+				</th>
+				<td>
+			';
+		}
+		echo '<textarea value="" name="'.$name.'" id="'.$id . '" rows="5" '.$this->_inputAttr().'>'.$meta.'</textarea>';
 		if(!empty($this->_description))
 		{
 			echo '<p class="description">' . $this->_description . '</p>';

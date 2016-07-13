@@ -24,10 +24,7 @@ class Url extends \Morepress\Post\Field
 				<label for="'.$id . '">'.$this->_label.'</label>
 			</th>
 			<td>
-                <div class="alignleft actions">
-                    <input type="url" value="'.$meta.'" name="'.$name.'" id="'.$id . '" '.$this->_inputAttr().'>
-                </div>
-
+                <input type="url" value="'.$meta.'" name="'.$name.'" id="'.$id . '" '.$this->_inputAttr().'>
             ';
 		if(!empty($this->_description))
 		{

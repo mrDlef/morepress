@@ -47,6 +47,24 @@ class Search {
 		}
 	}
 
+	public function addMeta($keys) {
+		global $wpdb;
+		is_string($keys) and $keys = array($keys);
+		foreach($keys as $key)
+		{
+			$query = '('.$wpdb->prefix.'posts.ID IN (
+				SELECT '.$wpdb->prefix.'posts.ID FROM '.$wpdb->prefix.'posts
+				LEFT JOIN '.$wpdb->prefix.'postmeta
+					ON '.$wpdb->prefix.'postmeta.post_id = '.$wpdb->prefix.'posts.ID
+				WHERE '.$wpdb->prefix.'postmeta.meta_key = \''.$key.'\'
+					AND '.$wpdb->prefix.'postmeta.meta_value LIKE \'%s\'
+			))';
+
+
+			$this->_search_query[] = $query;
+		}
+	}
+
 	public function addTaxonomies($taxonomies) {
 		global $wpdb;
 		is_string($taxonomies) and $taxonomies = array($taxonomies);

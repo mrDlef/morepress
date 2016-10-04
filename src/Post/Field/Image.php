@@ -43,7 +43,7 @@ class Image extends \Morepress\Post\Field
                     <input name="'.$name.'" type="hidden" class="upload_image" value="'.$meta.'">
                     <div class="upload_preview"><img src="'.($image ? $image->guid : '').'" class="preview_image" height="150" alt=""></div>
                     <p class="hide-if-no-js">
-                        <button class="upload_image_button button'.($meta ? ' hidden' : '').'" type="button">Choisir un image</button>
+                        <button class="upload_image_button button'.($meta ? ' hidden' : '').'" type="button">Choisir une image</button>
                         <button class="clear_image_button button'.($meta ? '' : ' hidden').'" type="button">Supprimer l\'image</button>
                     </p>
                 ';
@@ -62,7 +62,7 @@ class Image extends \Morepress\Post\Field
                     <input name="'.$name.'" type="hidden" class="upload_image" value="'.$meta.'">
                     <div class="upload_preview"><img src="'.($image ? $image->guid : '').'" class="preview_image" height="150" alt=""></div>
                     <p class="hide-if-no-js">
-                        <button class="upload_image_button button'.($meta ? ' hidden' : '').'" type="button">Choisir un image</button>
+                        <button class="upload_image_button button'.($meta ? ' hidden' : '').'" type="button">Choisir une image</button>
                         <button class="clear_image_button button'.($meta ? '' : ' hidden').'" type="button">Supprimer l\'image</button>
                     </p>
                 ';

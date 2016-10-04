@@ -2,6 +2,8 @@
 
 namespace Morepress;
 
+use Morepress\Taxonomy;
+
 class Post_Type
 {
 
@@ -10,6 +12,7 @@ class Post_Type
 	protected $_args;
 	protected $_actions;
     protected $_condition;
+    protected $_admin_filter_by_tax = array();
 
 	public static function forge($post_type, $args = array())
 	{
@@ -275,5 +278,65 @@ class Post_Type
             return $this->_args[$key];
         }
 	}
+
+    public function adminFilterByTax($taxonomies = array()) {
+        is_array($taxonomies) or $taxonomies = array($taxonomies);
+        $this->_admin_filter_by_tax = $taxonomies;
+        add_action('pre_get_posts', array($this, 'adminAddFilterByTax'));
+        add_action('restrict_manage_posts', array($this, 'adminAddFilterByTaxDropdown'));
+    }
+
+    public function adminAddFilterByTax($query) {
+        //$this->_admin_filter_by_tax
+        global $post_type, $pagenow;
+        //if we are currently on the edit screen of the post type listings
+        if ($pagenow == 'edit.php' && $post_type == $this->_post_type) {
+            foreach ($this->_admin_filter_by_tax as $taxonomy) {
+                $taxonomy = Taxonomy::forge($taxonomy);
+                $taxonomy_object = $taxonomy->getObject();
+                if (isset($_GET['f_' . $taxonomy->query_var])) {
+                    //get the desired term
+                    $term_id = sanitize_text_field($_GET['f_' . $taxonomy_object->query_var]);
+                    //if the post format is not 0 (which means all)
+                    if ($term_id != 0) {
+                        $query->query_vars['tax_query'][] = array(
+                            'taxonomy' => $taxonomy_object->name,
+                            'field' => 'term_id',
+                            'terms' => $term_id,
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    /*
+     * Defining the filter that will be used to select posts by $_admin_filter_by_tax
+     */
+
+    public function adminAddFilterByTaxDropdown() {
+        global $post_type;
+
+        if ($post_type == $this->_post_type) {
+            foreach ($this->_admin_filter_by_tax as $taxonomy) {
+                $taxonomy = Taxonomy::forge($taxonomy);
+                $taxonomy_object = $taxonomy->getObject();
+                $post_formats_args = array(
+                    'show_option_all' => $taxonomy_object->labels->name,
+                    'orderby' => 'name',
+                    'order' => 'ASC',
+                    'name' => 'f_' . $taxonomy_object->query_var,
+                    'taxonomy' => $taxonomy_object->name,
+                );
+
+                //if we have a post format already selected, ensure that its value is set to be selected
+                if (isset($_GET['f_' . $taxonomy_object->query_var])) {
+                    $post_formats_args['selected'] = sanitize_text_field($_GET['f_' . $taxonomy_object->query_var]);
+                }
+
+                wp_dropdown_categories($post_formats_args);
+            }
+        }
+    }
 
 }
